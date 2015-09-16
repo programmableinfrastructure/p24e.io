@@ -1,0 +1,41 @@
+---
+layout: default
+---
+
+<div class="container-fluid">
+  <div class="page-header">
+    <h3>Guides</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Service Discovery</h4>
+      <ul>
+        {% assign sd_guides = site.guides | where: 'component', 'service-discovery' %}
+        {% for guide in sd_guides %}
+          <li><a href="{{ guide.url }}">{{ guide.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <hr/>
+  <div class="page-header">
+    <h3>Technologies</h3>
+  </div>
+  <div class="row">
+    {% for comp in site.components %}
+      <div class="col-md-3 tile">
+        <h1><i class="{{ comp.icon }}"></i></h1>
+        <h4><a href="{{ comp.url }}">{{ comp.title }}</a></h4>
+        <ul>
+          {% assign techcoll = site.tech | where: 'component', comp.document_name %}
+          {% for tech in techcoll %}
+            <a href="{{ tech.url }}">{{ tech.document_name | resolve_collection: 'tech', 'shortname', 'title' }}</a></li>
+            {% unless forloop.last %}|{% endunless %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% cycle '', '', '', '</div><div class="row">' %}
+    {% endfor %}
+  </div>
+  <hr/>
+</div>

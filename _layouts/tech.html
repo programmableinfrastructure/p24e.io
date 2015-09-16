@@ -1,0 +1,85 @@
+---
+layout: default
+---
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>{{ page.title }}</h2>
+      </div>
+      <div class="col-md-5 col-md-offset-1">
+        <h2>{{ page.document_name | collection_image: 'tech' }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      {{ content }}
+
+      {% if page.posts and page.posts[0] %}
+        <h5>Posts</h5>
+        <ul>
+        {% assign posts = page.posts | sort: 'date' | reverse %}
+        {% for post in posts %}
+          <li><a href="{{ post.url }}" rel="nofollow" target="_blank">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+        <br/>
+      {% endif %}
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <table class="table">
+      {% if page.status %}
+        <tr>
+          <th>Status</th>
+          <td><span class="status-{{page.status}}">{{ page.status }}</span></td>
+        </tr>
+      {% endif %}
+      {% if page.vendor %}
+        <tr>
+          <th>Vendor</th>
+          <td>{{ page.vendor }}</td>
+        </tr>
+      {% endif %}
+      {% if page.sponsors %}
+        <tr>
+          <th>Sponsors</th>
+          <td>
+            {% for sponsor in page.sponsors %}
+              {{ sponsor }}<br/>
+            {% endfor %}
+          </td>
+        </tr>
+      {% endif %}
+      {% if page.website %}
+        <tr>
+          <th>Website</th>
+          <td><a href="{{ page.website }}" target="_blank" rel="nofollow">{{ page.website }}</a></td>
+        </tr>
+      {% endif %}
+      {% assign parts = site.tech | where: 'part_of', page.document_name %}
+      {% if parts[0] %}
+        <tr>
+          <th>Parts</th>
+          <td>
+            {% for part in parts %}
+              <a href="{{ part.url }}">{{ part.title }}</a><br/>
+            {% endfor %}
+          </td>
+        </tr>
+      {% endif %}
+      {% if page.part_of %}
+        <tr>
+          <th>Part of</th>
+          <td><a href="/tech/{{ page.part_of }}">{{ page.part_of | resolve_collection: 'tech', 'title' }}</a></td>
+        </tr>
+      {% endif %}
+      </table>
+    </div>
+  </div>
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/components/{{ page.component }}">{{ page.component | resolve_collection: 'components', 'title' }}</a></li>
+    <li class="active">{{ page.title }}</li>
+  </ol>
+</div>

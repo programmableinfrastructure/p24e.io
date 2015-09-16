@@ -1,0 +1,49 @@
+# Site settings
+title: Programmable Infrastructure
+email: mail@programmableinfrastructure.com
+description: > # this means to ignore newlines until "baseurl:"
+  The ultimate resource for technologies revolving around programmable
+  infrastructure, docker, microservices, containers, PaaS
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://programmableinfrastructure.com" # the base hostname & protocol for your site
+
+jquery_base_path: "/assets/js"
+# in production --> jquery_base_path: "//ajax.googleapis.com/ajax/libs/jquery/1.11.3"
+bootstrap_base_path: "/assets/bootstrap"
+# in production --> bootstrap_base_path: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5"
+bootstrap_css_path: "/assets/bootstrap/css/paper"
+# in production --> bootstrap_css_path: "//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper"
+# for default   --> bootstrap_css_path: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css"
+fontawesome_base_path: "/assets/fontawesome"
+# in production --> fontawesome_base_path: "maxcdn.bootstrapcdn.com/font-awesome/4.3.0"
+
+# Build settings
+markdown: kramdown
+
+defaults:
+  - scope:
+      path: ""
+      type: tech
+    values:
+      layout: tech
+  - scope:
+      path: ""
+      type: guides
+    values:
+      layout: guide
+  - scope:
+      path: ""
+      type: components
+    values:
+      layout: component
+
+collections:
+  tech:
+    output: true
+    permalink: /tech/:path/
+  components:
+    output: true
+    permalink: /components/:path/
+  guides:
+    output: true
+    permalink: /guides/:path/

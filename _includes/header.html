@@ -1,0 +1,46 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="Programmeble Infrastructure">p24e</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        {% for page in site.pages %}
+          {% if page.title %}
+            <li><a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a></li>
+          {% endif %}
+        {% endfor %}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guides <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            {% for guide in site.guides %}
+              <li><a href="{{ guide.url | prepend: site.baseurl }}">{{ guide.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Technologies <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            {% for comp in site.components %}
+              <li><a href="{{ comp.url | prepend: site.baseurl }}"><i style="width:2em" class="{{ comp.icon }}"></i> {{ comp.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+      <p class="navbar-text navbar-right social-icons">
+        <a href="https://github.com/programmableinfrastructure" class="navbar-link" title="Github"><span class="fa fa-github"></span></a>
+        <a href="https://twitter.com/progrinfra" class="navbar-link" title="Twitter"><span class="fa fa-twitter"></span></a>
+        <a href="https://p24e.slack.com" class="navbar-link" title="Slack"><span class="fa fa-slack"></span></a>
+      </p>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

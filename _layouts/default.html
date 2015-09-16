@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include head.html %}
+  <body>
+    {% include header.html %}
+
+    {{ content }}
+
+    {% include footer.html %}
+    <script src="{{ site.jquery_base_path }}/jquery.min.js"></script>
+    <script src="{{ site.bootstrap_base_path }}/js/bootstrap.min.js"></script>
+  </body>
+</html>

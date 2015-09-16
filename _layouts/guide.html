@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<div class="container-fluid">
+  <div class="page-header">
+    <h3>
+      {{ page.title }}
+    </h3>
+    <h5>
+      <small>
+        by {{ page.author }}
+        {% if page.sponsor %}
+        - brought to you by <a href="{{ page.sponsor_website }}">{{ page.sponsor }}</a>
+        {% endif %}
+      </small>
+    <h5>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {{ content }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p class="text-right muted">
+        first published: {{ page.pubdate | date: '%B %d, %Y' }}
+      </p>
+    </div>
+  </div>
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/components/{{ page.component }}">{{ page.component | resolve_collection: 'components', 'title' }}</a></li>
+    <li class="active">{{ page.title }}</li>
+  </ol>
+</div>

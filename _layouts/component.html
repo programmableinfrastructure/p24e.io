@@ -1,0 +1,52 @@
+---
+layout: default
+---
+<div class="container-fluid">
+  <div class="page-header">
+    <h2>
+      <i class="{{ page.icon }}"></i>
+      {{ page.title }}
+    </h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6 desc">
+      {{ content }}
+
+      {% assign component_guides = site.guides | where: 'component', page.document_name %}
+      {% if component_guides[0] %}
+        <h5>Guides</h5>
+        <ul>
+        {% for guide in component_guides %}
+          <li><a href="{{ guide.url }}" rel="nofollow" target="_blank">{{ guide.title }}</a></li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% assign component_posts = site.tech | where: 'component', page.document_name | collect_posts: 25, page.posts | reverse %}
+      {% if component_posts[0] %}
+        <h5>On the web</h5>
+        <ul>
+        {% for post in component_posts %}
+          <li><a href="{{ post.url }}" rel="nofollow" target="_blank">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+        <br/>
+      {% endif %}
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <h5>Technologies</h5>
+      <ul>
+        {% assign techcoll = site.tech | where: 'component', page.document_name %}
+        {% for tech in techcoll %}
+          {% if tech %}
+            <li><a href="{{ tech.url }}">{{ tech.title }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </uL>
+    </div>
+  </div>
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">{{ page.title }}</li>
+  </ol>
+</div>

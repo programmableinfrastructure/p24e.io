@@ -7,45 +7,8 @@
 
 // ...
 
-// Stati
-.status-active {
-  color: green;
-}
-
-.social-icons {
-  margin-bottom: 0;
-  span {
-    font-size: 25px;
-    padding-right: 15px;
-  }
-}
-
-.desc {
-  p {
-    font-size: 15px;
-  }
-}
-
-.tile {
-  h1, h4 {
-    text-align: center;
-  }
-  li {
-    list-style-type: none;
-  }
-  border: 1px solid #ccc;
-  height: 18em;
-  overflow: hidden;
-}
-
-.page-header {
-  margin-top: 0;
-}
-
-.collection_image {
-  max-height: 50px;
-  vertical-align: bottom;
-}
-
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import "site";
+@import "home";
+@import "pages";
+@import "guides";

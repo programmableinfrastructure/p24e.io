@@ -1,0 +1,25 @@
+// Homepage
+
+.guides-list {
+  font-size: 15px;
+}
+
+.social-icons {
+  margin-bottom: 0;
+  span {
+    font-size: 25px;
+    padding-right: 15px;
+  }
+}
+
+.tile {
+  h1, h4 {
+    text-align: center;
+  }
+  li {
+    list-style-type: none;
+  }
+  border: 1px solid #ccc;
+  height: 18em;
+  overflow: hidden;
+}

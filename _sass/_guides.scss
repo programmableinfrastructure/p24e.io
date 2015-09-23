@@ -1,0 +1,68 @@
+// Guides
+
+.guide {
+  font-size: 15px;
+
+  // re-define sizes for headings inside guides, they seem too large for that purpose
+  h1 { font-size: 34px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 24px; }
+  h4 { font-size: 21px; }
+  h5 { font-size: 18px; }
+  h6 { font-size: 16px; }
+}
+
+/* sidebar */
+.guide-nav {
+    padding-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* all links */
+.guide-nav .nav>li>a {
+    color: #999;
+    border-left: 2px solid transparent;
+    padding: 4px 20px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/* nested links */
+.guide-nav .nav .nav>li>a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+}
+
+/* active & hover links */
+.guide-nav .nav>.active>a,
+.guide-nav .nav>li>a:hover,
+.guide-nav .nav>li>a:focus {
+    color: #563d7c;
+    text-decoration: none;
+    background-color: transparent;
+    border-left-color: #563d7c;
+}
+/* all active links */
+.guide-nav .nav>.active>a,
+.guide-nav .nav>.active:hover>a,
+.guide-nav .nav>.active:focus>a {
+    font-weight: 700;
+}
+/* nested active links */
+.guide-nav .nav .nav>.active>a,
+.guide-nav .nav .nav>.active:hover>a,
+.guide-nav .nav .nav>.active:focus>a {
+    font-weight: 500;
+}
+
+/* hide inactive nested list */
+.guide-nav .nav ul.nav {
+    display: none;
+}
+/* show active nested list */
+.guide-nav .nav>.active>ul.nav {
+    display: block;
+}

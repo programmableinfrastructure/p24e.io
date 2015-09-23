@@ -15,9 +15,14 @@ layout: default
       </small>
     <h5>
   </div>
-  <div class="row">
-    <div class="col-md-12">
+  <div class="row guide">
+    <div class="col-md-9 guide-content">
       {{ content }}
+    </div>
+    <div class="col-md-3">
+      <nav class="guide-nav hidden-print hidden-xs hidden-sm affix">
+        <!-- nav gets rendered via JS from headings in guide-content -->
+      </nav>
     </div>
   </div>
   <div class="row">

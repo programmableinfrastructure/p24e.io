@@ -17,7 +17,8 @@ outside world.
 
 ## Overview
 
-**Components:** [Bamboo](/tech/bamboo/), [Marathon](/tech/Marathon/), [HAProxy](/tech/haproxy/), [Zookeeper](/tech/zookeeper/)
+**Components:** [Bamboo](/tech/bamboo/), [Marathon](/tech/Marathon/),
+[HAProxy](/tech/haproxy/), [Zookeeper](/tech/zookeeper/)
 
 * Marathon starts Applications (services) as tasks in the Mesos cluster and uses
   healthchecks to keep track of their status
@@ -126,7 +127,7 @@ it `ghost.json`:
 
 Post it to the Marathon API via curl:
 
-    curl -X POST -H "Content-Type: application/json" http://ip-to-Marathon:8080/v2/apps -d@ghost.json
+    curl -X POST -H "Content-Type: application/json" http://ip-to-marathon:8080/v2/apps -d@ghost.json
 
 Check the Marathon UI, and you should see Ghost being deployed:
 
@@ -137,7 +138,7 @@ Check the Marathon UI, and you should see Ghost being deployed:
 ### 3. Configure matching rules in Bamboo
 
 Now, we want to hook up the Marathon Application to HAProxy, by telling Bamboo
-to which part of the URL HAProxy should look for.
+which part of the URL HAProxy should look at.
 
 ![URL matching](url-matching.png)
 
@@ -180,22 +181,29 @@ with the upstream version of Bamboo.
 
 ### Leverage Marathon App Environment variables
 
-Marathon app environment variables can be very useful to customize the HAProxy behavior for
-certain apps.
-One common example is the use of sticky sessions. Those are generally frowned upon as they go against
-the principle of stateless services, so session stickyness should never be made available to all services.
-Using an app environment variable makes this a deliberate decision on a per-service basis, one use case
-we did encounter was implementing a "polling" fallback endpoint to a generally Websockets based service.
-Using session stickiness can be the lesser of two evils, if the other option is changing your service
-design to use a shared session storage just for a small minority of clients not supporting Websockets.
+Marathon app environment variables can be very useful to customize the HAProxy
+behavior for certain apps.
+One common example is the use of sticky sessions. Those are generally frowned
+upon as they go against the principle of stateless services, so session stickiness
+should never be made available to all services. Using an app environment variable
+makes this a deliberate decision on a per-service basis.
 
-This is how it is done: Inside of a HAProxy `backend` block, add:
+One use case we did encounter was implementing a "polling" fallback endpoint to
+a generally Websockets based service. Using session stickiness can be the lesser
+of two evils, if the other option is changing your service design to use a shared
+session storage just for a small minority of clients not supporting Websockets.
 
+To implement this, replace `balance leastconn` in the `backend` block of
+`/var/bamboo/haproxy_template.cfg` with this:
+{% raw %}
     {{ if $app.Env.STICKY_SESSIONS }}
     balance url_param sticky
     {{ else }}
-
-Then, in the Marathon JSON file to deploy your service, add:
+    balance leastconn
+    {{ end }}
+{% endraw %}
+Then, in the Marathon JSON file that you use to deploy your service, add an
+environment variable called `STICKY_SESSIONS`:
 
     {
       "id": "my-marathon-app",
@@ -221,8 +229,9 @@ There can be cases where connections are attempted against unhealthy backends:
 While 2. will be solved in future versions of Bamboo, the problem in 1. remains.
 Both can be mitigated by adding `option redispatch` to your HAProxy configuration.
 By default, HAProxy will retry a backend 3 times before answering with an error
-`503`. `option redispatch` will cause the retries to happen on different backends,
-if there are any. The number of retries can be tweaked with `option retries [number]`.
+`503`. Adding `option redispatch` will cause the retries to happen on different
+backends, if there are any. The number of retries can be tweaked with
+`option retries [number]`.
 
 ---
 
@@ -231,7 +240,7 @@ if there are any. The number of retries can be tweaked with `option retries [num
 This is more of a general advice for running HAProxy.
 Depending on the specs of the machine running HAProxy, and the kind of traffic you expect,
 you might want to check if tweaking of the following settings makes sense:
-`maxconn`, `ulimit-n`, `timeout connect`, `timeout client`, `timeout server`
+`maxconn`, `ulimit-n`, `timeout connect`, `timeout client`, `timeout server`.
 You should, however, have good reasons to change the defaults, and test your assumptions
 with load testing tools (e.g. gatling or jmeter).
 

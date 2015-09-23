@@ -156,7 +156,7 @@ Then access to `example.com` and you can see the current version _2.0.0_ .
 ![example_com](https://cloud.githubusercontent.com/assets/680124/9721333/aeb836e8-55d3-11e5-9ecf-1eb707fcd81b.png)
 
 ### Hints
-If you're sitting behind a proxy you have to run an own discovery enpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
+If you're sitting behind a proxy you have to run an own discovery endpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
 
 ### pros and cons of using vulcand
 Pros:

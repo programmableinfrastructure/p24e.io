@@ -9,13 +9,13 @@ pubdate: 2015-09-23 00:00:00
 
 ## Problem
 
-If you have a couple of microservices distribured across your coreos cluster, and want to make them accessible via HTTP so they can call each other or be accessed from the outside world. You need a loadbalancer. With vulcand there is the possibility to have a autoconfigured loadbalancer.
+If you have a couple of microservices distribured across your coreos cluster and want to make them accessible via HTTP so they can call each other or be accessed from the outside world, you need a loadbalancer. With vulcand there is the possibility to have a autoconfigured loadbalancer.
 
 ---
 
 ## Overview
 
-** Components:** [CoreOS](/tech/coreos/), [etcd](/tech/etcd/), [vulcand](/tech/vulcand/)
+**Components:** [CoreOS](/tech/coreos/), [etcd](/tech/etcd/), [vulcand](/tech/vulcand/)
 * CoreOS is a minimal Linux OS optimized to run containers
 * etcd is a clusteres key value store that stores data across a cluster of machines
 * vulcand is a progammable loadbalancer developed by https://www.mailgun.com/ an email service for devs

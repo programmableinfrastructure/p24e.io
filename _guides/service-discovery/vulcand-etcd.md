@@ -142,17 +142,8 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 ---
 
 ### Hints
-<<<<<<< HEAD
-As etcd discovery doesn't support proxies you have to run an own discovery endpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
-=======
-If you're sitting behind a proxy you have to run an own discovery endpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
 
-### pros and cons of using vulcand
-Pros:
-- Interacts directly with etcd
-- Changes don't need a restart
-- No config files needed
->>>>>>> 4f5dd7d6d7304f58f4f03c12af619693e484b8a8
+As etcd discovery doesn't support proxies you have to run an own discovery endpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
 
 ---
 

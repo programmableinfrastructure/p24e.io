@@ -7,41 +7,51 @@ sponsor_website: http://www.swisscom.ch
 pubdate: 2015-09-23 00:00:00
 ---
 
-#### Problem
+## Problem
 
-If you have a couple of microservices distribured across your coreos cluster, and want to make them accessible via HTTP so they can call each other or be accessed from the outside world. You need a mechanism which can reconfigure itself.
+If you have a couple of microservices distribured across your coreos cluster, and want to make them accessible via HTTP so they can call each other or be accessed from the outside world. You need a loadbalancer. With vulcand there is the possibility to have a autoconfigured loadbalancer.
 
-#### Components
+---
 
-* [CoreOS](/tech/coreos/)
-* [etcd](/tech/etcd/)
-* [vulcand](/tech/vulcand/)
+## Overview
 
-#### Overview
-
-Marathon schedules services as tasks in the Mesos cluster and uses healthchecks to keep track of the
-tasks status. Bamboo listens to Marathon events for task changes and updates the HAProxy configuration
-accordingly. HAProxy ACL rules are configured via Bamboo and can be used to match request characteristics,
-like URL patterns, host names or HTTP headers to services that should handle the request.
+** Components:** [CoreOS](/tech/coreos/), [etcd](/tech/etcd/), [vulcand](/tech/vulcand/)
+* CoreOS is a minimal Linux OS optimized to run containers
+* etcd is a clusteres key value store that stores data across a cluster of machines
+* vulcand is a progammable loadbalancer developed by https://www.mailgun.com/ an email service for devs
 
 
-# coreos-vulcand-example
+---
 
-Vulcand version: `v0.8.0-beta.2`
+### Pros
 
-### TEST ENVIRONMENT
+- Interacts directly with etcd
+- Changes don't need a restart
+- No config files needed
+
+---
+
+### Cons
+- Still beta
+- No heavy development visible
+
+---
+
+## Implementation steps
 
 This example is based on the coreos/example https://coreos.com/blog/zero-downtime-frontend-deploys-vulcand/ running on a 3 node coreos-cluster deployed via Vagrant.
 
 Example Vagrantfile, user-data and config.rb can be found here:
 https://github.com/muemich/coreos-vagrant-vulcand
 
-### Set up
+---
+
+### 1. Set up base infrastructure
 
 Add `172.17.8.101 example.com` to `/etc/hosts` on your host machine,
 
 
-Launch CoreOS VMs and log in,
+Launch one or many CoreOS machines and log in. For this example one is enough.
 
 ```bash
 $ vagrant up
@@ -86,7 +96,7 @@ systemctl status vulcand
    Memory: 12.5M
       CPU: 123ms
    CGroup: /system.slice/vulcand.service
-           └─1331 /usr/bin/docker run --name vulcand -p 80:80 -p 443:443 -p 8182:8182 -p 8181:8181 mailgun/vulcand:v0.8.0-beta.2 /go/bin/vulcand -apiInterface=0.0.0.0 -interface=0.0.0.0 -etcd=http://...
+           └─1331 /usr/bin/docker run --name vulcand -p 80:80 -p 443:443 -p 8182:8182 -p 8181:8181 mailgun/vulcand:v0.8.0-beta.2 /go/bin/vulcand -apiInterface=0.0.0.0 -interface=0.0.0.0 -etcd=http://<IP:4001>
 
 Sep 22 15:03:00 core-01 docker[1331]: 5c5ef0bea32a: Download complete
 Sep 22 15:03:00 core-01 docker[1331]: 6c24554e26e5: Pulling metadata
@@ -102,8 +112,9 @@ Sep 22 15:03:05 core-01 docker[1331]: Sep 22 15:03:05.587: WARN PID:1 [superviso
 
 As there are no frontends deployed yet, the warning can be ignored.
 
+---
 
-### Deploy v1 containers
+### 2. Deploy test backend containers
 
 Run web application __v1__ containers,
 
@@ -115,12 +126,12 @@ $ docker run -d --name example-v1.2 -p 8087:80 coreos/example:1.0.0
 Configure Vulcand to proxy to __v1__ container,
 
 ```bash
-# Register v1 containers
+### 3.  Register backend containers
 $ etcdctl set /vulcand/backends/v1/backend '{"Type": "http"}'
 $ etcdctl set /vulcand/backends/v1/servers/v1.1 '{"URL": "http://172.17.8.101:8086"}'
 $ etcdctl set /vulcand/backends/v1/servers/v1.2 '{"URL": "http://172.17.8.101:8087"}'
 
-# To proxy to v1 containers
+#### To proxy to v1 containers
 $ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
 ```
 
@@ -128,48 +139,14 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ![example_com](https://cloud.githubusercontent.com/assets/680124/9721329/a21893b0-55d3-11e5-88de-1b0c45394076.png)
 
-### Deploy v2 containers
-
-OK, let's deploy the new version __v2__.
-
-Run web application __v2__ containers,
-
-```bash
-$ docker run -d --name example-v2.1 -p 8088:80 coreos/example:2.0.0
-$ docker run -d --name example-v2.2 -p 8089:80 coreos/example:2.0.0
-```
-
-Configure Vulcand to proxy to __v2__ container,
-
-```bash
-# Register v2 containers
-$ etcdctl set /vulcand/backends/v2/backend '{"Type": "http"}'
-$ etcdctl set /vulcand/backends/v2/servers/v2.1 '{"URL": "http://172.17.8.101:8088"}'
-$ etcdctl set /vulcand/backends/v2/servers/v2.2 '{"URL": "http://172.17.8.101:8089"}'
-
-# To proxy to v2 containers
-$ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v2", "Route": "Host(`example.com`) && Path(`/`)"}'
-```
-
-Then access to `example.com` and you can see the current version _2.0.0_ .
-
-![example_com](https://cloud.githubusercontent.com/assets/680124/9721333/aeb836e8-55d3-11e5-9ecf-1eb707fcd81b.png)
+---
 
 ### Hints
-If you're sitting behind a proxy you have to run an own discovery enpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
+As etcd discovery doesn't support proxies you have to run an own discovery endpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
 
-### pros and cons of using vulcand
-Pros:
-- Interacts directly with etcd
-- Changes don't need a restart
-- No config files needed
-
-Cons:
-- Still beta
-- No heavy development visible
-
-### When to use
-In test environment with moderate load.
+---
 
 ### Future work
-High availability needs to be tested but could be achieved with multiple vulcand containers behind a cloud load balancer.
+To make the registration process automatic a script needs to be cerated which creates the corresponding values in etcd. To add a container to a specific backend labels could be used e.g.:
+backend=foo: assign the application to foo backend
+port=80: register this port. Useful when the application exposes multiples

@@ -19,6 +19,8 @@ fontawesome_base_path: "/assets/fontawesome"
 
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
 
 defaults:
   - scope:

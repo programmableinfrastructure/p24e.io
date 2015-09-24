@@ -148,6 +148,7 @@ As etcd discovery doesn't support proxies you have to run an own discovery endpo
 ---
 
 ### Future work
-To make the registration process automatic a script needs to be cerated which creates the corresponding values in etcd. To add a container to a specific backend labels could be used e.g.:
-backend=foo: assign the application to foo backend
-port=80: register this port. Useful when the application exposes multiples
+
+To make the registration process automatic a script needs to be cerated which creates the corresponding values in etcd. To make this automation process easy labels could be used e.g.:
+- backend=foo: assign the application to foo backend
+- port=80: register this port

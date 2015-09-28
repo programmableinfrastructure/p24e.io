@@ -1,9 +1,7 @@
 ---
 title: Service Discovery with etcd and vulcand
-component: service-discovery
+component: load-balancing
 author: Michael Mueller
-sponsor: Swisscom AG
-sponsor_website: http://www.swisscom.ch
 pubdate: 2015-09-23 00:00:00
 ---
 

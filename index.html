@@ -8,9 +8,8 @@ layout: default
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h4>Service Discovery</h4>
       <ul class="guides-list">
-        {% assign sd_guides = site.guides | where: 'component', 'service-discovery' %}
+        {% assign sd_guides = site.guides | sort: 'pubdate' %}
         {% for guide in sd_guides %}
           <li><a href="{{ guide.url }}">{{ guide.title }}</a> by {{ guide.author }}</li>
         {% endfor %}

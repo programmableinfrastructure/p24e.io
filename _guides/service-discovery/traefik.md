@@ -1,8 +1,7 @@
 ---
 title: Service Discovery with traefik
-component: service-discovery
+component: load-balancing
 author: Michael Mueller
-sponsor_website: http://www.swisscom.ch
 pubdate: 2015-09-25 00:00:00
 ---
 
@@ -17,7 +16,6 @@ If you have a radpid changing microservice infrastructure and you want to make i
 **Components:** [Docker](/tech/docker/), [Træfik](/tech/traefik/)
 * Docker to run the services.
 * Træfɪk will automatically configure it's frontend and backend configuration based on labels assigned to the docker containers. Other ways of configuring Træfɪk are available (Mesos/Marathon, Consul, Etcd, Rest API, file), but aren't covered here.
-
 
 ---
 
@@ -52,12 +50,12 @@ This example is based on a single machine running Ubuntu 14.04 with docker. We'l
 
 To autoconfigure the LB labels are used on the backend containers. Labels can be used on containers to override default behaviour:
 
-- traefik.backend=foo: assign the application to foo backend
-- traefik.port=80: register this port. Useful when the application exposes multiples ports.
-- traefik.weight=10: assign this weight to the application
-- traefik.enable=false: disable this application in Træfɪk
-- traefik.host=bar: override the default routing from {appName}.{domain} to bar.{domain}
-- traefik.prefixes=pf1,pf2: use PathPrefix(es) instead of hostname for routing, use filename="providerTemplates/marathon-prefix.tmpl" with this option
+`traefik.backend=foo` assign the application to foo backend
+`traefik.port=80` register this port. Useful when the application exposes multiples ports
+`traefik.weight=10` assign this weight to the application
+`traefik.enable=false` disable this application in Træfɪk
+`traefik.host=bar` override the default routing from {appName}.{domain} to bar.{domain}
+`traefik.prefixes=pf1,pf2` use PathPrefix(es) instead of hostname for routing, use filename="providerTemplates/marathon-prefix.tmpl" with this option
 
 Run web application __v1__ containers with the needed labels
 
@@ -314,22 +312,6 @@ Percentage of the requests served within a certain time (ms)
 ### 5 Conclusion
 
 The test was running with 100 concurrent requests using apache benchmark and HAproxy and Træfɪk acting as simple loadbalancer between two containers.
-
-<style>
-table{
-    border-collapse: collapse;
-    border-spacing: 0;
-    border:2px solid #000000;
-}
-
-th{
-    border:2px solid #000000;
-}
-
-td{
-    border:2px solid #000000;
-}
-</style>
 
 |platform|50% requests completed (ms)|95% requests completed (ms)|request per s (mean)|
 |---|---|---|---|

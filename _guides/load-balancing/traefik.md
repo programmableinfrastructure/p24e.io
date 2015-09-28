@@ -68,7 +68,7 @@ docker run -d --label=traefik.backend=foo --label=traefik.host=bar --name exampl
 
 ---
 
-### 3 Set up traefik
+### 3. Set up traefik
 
 Create traefik.toml based on your needs. Example:
 
@@ -251,6 +251,7 @@ Percentage of the requests served within a certain time (ms)
 ---
 
 #### 4.3 HAProxy
+
 ```bash
 ab -n 100000 -c 100 http://bar.docker.localhost/
 This is ApacheBench, Version 2.3 <$Revision: 1663405 $>
@@ -311,7 +312,7 @@ Percentage of the requests served within a certain time (ms)
 
 ---
 
-### 5 Conclusion
+## Conclusion
 
 The test was running with 100 concurrent requests using apache benchmark and HAproxy and Træfɪk acting as simple loadbalancer between two containers.
 

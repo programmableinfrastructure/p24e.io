@@ -14,14 +14,21 @@ $(function() {
     if (!lastLevel) {
        lastLevel = level;
     }
+    var delta = level - lastLevel;
 
     var link = '<a href="#' + el.id + '">' + el.innerText + '</a>';
-    if (level == lastLevel) {
+    if (delta == 0) {
       if (nav) nav += '</li>';
       nav += '<li>' + link;
-    } else if (level > lastLevel) {
+    } else if (delta > 0) {
+      for (var i=delta; i > 1; i--) {
+        nav += '<ul class="nav nav-stacked"><li>';
+      }
       nav += '<ul class="nav nav-stacked"><li>' + link;
-    } else { // level < lastLevel
+    } else { // delta < 0
+      for (var i=delta; i < -1; i++) {
+        nav += '</li></ul>';
+      }
       nav += '</li></ul><li>' + link;
     }
     lastLevel = level;

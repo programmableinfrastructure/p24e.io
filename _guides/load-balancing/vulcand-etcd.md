@@ -57,8 +57,10 @@ Launch one or many CoreOS machines and log in. For this example one is enough.
 $ vagrant up
 $ vagrant ssh core-01 -- -A
 ```
+---
 
-### Ensure etcd and vulcand is running
+### 2. Ensure etcd and vulcand are running
+
 ```bash
 core@core-01 ~ $ systemctl status etcd2
 ● etcd2.service - etcd2
@@ -114,7 +116,7 @@ As there are no frontends deployed yet, the warning can be ignored.
 
 ---
 
-### 2. Deploy test backend containers
+### 3. Deploy test backend containers
 
 Run web application __v1__ containers,
 
@@ -125,13 +127,19 @@ $ docker run -d --name example-v1.2 -p 8087:80 coreos/example:1.0.0
 
 Configure Vulcand to proxy to __v1__ container,
 
+---
+
+### 4. Register backend containers
+
 ```bash
-### 3.  Register backend containers
 $ etcdctl set /vulcand/backends/v1/backend '{"Type": "http"}'
 $ etcdctl set /vulcand/backends/v1/servers/v1.1 '{"URL": "http://172.17.8.101:8086"}'
 $ etcdctl set /vulcand/backends/v1/servers/v1.2 '{"URL": "http://172.17.8.101:8087"}'
+```
 
-#### To proxy to v1 containers
+*To proxy to v1 containers:*
+
+```
 $ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
 ```
 
@@ -141,15 +149,15 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ---
 
-### Hints
+## Hints
 
-As etcd discovery doesn't support proxies you have to run an own discovery endpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
+As etcd discovery doesn't support proxies you have to run an own discovery endpoint behind the proxy, or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
 
 ---
 
-### Future work
+## Future work
 
-To make the registration process automatic a script needs to be created which sets the corresponding values in etcd. To make this automation process easy labels could be used e.g.:
+To make the registration process automatic, a script needs to be created which sets the corresponding values in etcd. To make this automation process easy, labels could be used e.g.:
 
 - `backend=foo`: assign the application to foo backend
 - `port=80`: register this port

@@ -1,5 +1,5 @@
 ---
-title: Service Discovery with etcd and vulcand
+title: Load Balancing with etcd and vulcand
 component: load-balancing
 author: Michael Mueller
 pubdate: 2015-09-23 00:00:00
@@ -14,9 +14,10 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ## Overview
 
 **Components:** [CoreOS](/tech/coreos/), [etcd](/tech/etcd/), [vulcand](/tech/vulcand/)
+
 * CoreOS is a minimal Linux OS optimized to run containers
 * etcd is a clustered key value store that stores data across a cluster of machines
-* vulcand is a progammable loadbalancer developed by https://www.mailgun.com/ an email service for devs
+* vulcand is a progammable loadbalancer developed by [mailgun.com](https://www.mailgun.com/), an email service for devs
 
 
 ---
@@ -30,6 +31,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ---
 
 ### Cons
+
 - Still beta
 - No heavy development visible
 
@@ -37,10 +39,10 @@ If you want to make your distributed microservices accessible via HTTP so they c
 
 ## Implementation steps
 
-This example is based on the coreos/example https://coreos.com/blog/zero-downtime-frontend-deploys-vulcand/ running on a 3 node coreos-cluster deployed via Vagrant.
+This example is based on the coreos/example [coreos.com/blog/zero-downtime-frontend-deploys-vulcand/](https://coreos.com/blog/zero-downtime-frontend-deploys-vulcand/) running on a 3 node coreos-cluster deployed via Vagrant.
 
 Example Vagrantfile, user-data and config.rb can be found here:
-https://github.com/muemich/coreos-vagrant-vulcand
+[https://github.com/muemich/coreos-vagrant-vulcand](https://github.com/muemich/coreos-vagrant-vulcand)
 
 ---
 
@@ -148,5 +150,6 @@ As etcd discovery doesn't support proxies you have to run an own discovery endpo
 ### Future work
 
 To make the registration process automatic a script needs to be created which sets the corresponding values in etcd. To make this automation process easy labels could be used e.g.:
-- backend=foo: assign the application to foo backend
-- port=80: register this port
+
+- `backend=foo`: assign the application to foo backend
+- `port=80`: register this port

@@ -1,6 +1,9 @@
-// Generate the nested sidebar nav for guides from the heading elements.
 $(function() {
 
+  // prettify tables in guides
+  $('.guide table').addClass('table');
+
+  // Generate the nested sidebar nav for guides from the heading elements.
   var $nav = $('.guide-nav');
   if (!$nav.length) return;
 

@@ -21,7 +21,7 @@ layout: default
         <ul>
         {% assign posts = page.posts | sort: 'date' | reverse %}
         {% for post in posts %}
-          <li><a href="{{ post.url }}" rel="nofollow" target="_blank">{{ post.title }}</a></li>
+          <li><a href="{{ post.url }}" rel="nofollow" target="_blank">{{ post.title }}</a> <small>({{ post.date | date: '%Y-%m-%d' }})</small></li>
         {% endfor %}
         </ul>
         <br/>

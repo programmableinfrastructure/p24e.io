@@ -3,3 +3,29 @@
 .page-header {
   margin-top: 0;
 }
+
+.page {
+  p, li {
+    font-size: 15px;
+  }
+}
+
+.definition {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: rgb(51, 51, 51);
+  font-size: 21px;
+  font-weight: 300;
+  line-height: 29.4px;
+  margin-left: 12px;
+  span {
+    border-bottom: 1px dashed #999;
+  }
+  big {
+    font-size: 32px;
+    color: #999;
+    position: absolute;
+  }
+  big.first {
+    margin-left: -12px;
+  }
+}

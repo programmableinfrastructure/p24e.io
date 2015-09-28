@@ -12,12 +12,12 @@ layout: default
     <div class="col-md-6 desc">
       {{ content }}
 
-      {% assign component_guides = site.guides | where: 'component', page.document_name %}
+      {% assign component_guides = site.guides | where: 'component', page.document_name | sort: 'pubdate' %}
       {% if component_guides[0] %}
         <h5>Guides</h5>
         <ul>
         {% for guide in component_guides %}
-          <li><a href="{{ guide.url }}" rel="nofollow" target="_blank">{{ guide.title }}</a></li>
+          <li><a href="{{ guide.url }}" rel="nofollow" target="_blank">{{ guide.title }}</a> <small>({{ guide.pubdate | date: '%Y-%m-%d' }})</small></li>
         {% endfor %}
         </ul>
       {% endif %}
@@ -27,7 +27,7 @@ layout: default
         <h5>On the web</h5>
         <ul>
         {% for post in component_posts %}
-          <li><a href="{{ post.url }}" rel="nofollow" target="_blank">{{ post.title }}</a></li>
+          <li><a href="{{ post.url }}" rel="nofollow" target="_blank">{{ post.title }}</a> <small>({{ post.date | date: '%Y-%m-%d' }})</small></li>
         {% endfor %}
         </ul>
         <br/>

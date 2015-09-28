@@ -2,7 +2,6 @@
 title: Service Discovery with traefik
 component: service-discovery
 author: Michael Mueller
-sponsor: Swisscom AG
 sponsor_website: http://www.swisscom.ch
 pubdate: 2015-09-25 00:00:00
 ---
@@ -16,8 +15,8 @@ If you have a radpid changing microservice infrastructure and you want to make i
 ## Overview
 
 **Components:** [Docker](/tech/docker/), [Træfik](/tech/traefik/)
-* Docker is an open platform for developers and sysadmins to build, ship, and run distributed applications, whether on laptops, data center VMs, or the cloud.
-* Træfɪk is a HTTP reverse proxy and load balancer made to deploy microservices it's configuration is managed automatically and dynamically.
+* Docker to run the services.
+* Træfɪk will automatically configure it's frontend and backend configuration based on labels assigned to the docker containers. Other ways of configuring Træfɪk are available (Mesos/Marathon, Consul, Etcd, Rest API, file), but aren't covered here.
 
 
 ---
@@ -33,7 +32,6 @@ If you have a radpid changing microservice infrastructure and you want to make i
 - Pretty young project
 - No websocket support
 - No TCP support
-
 
 ---
 
@@ -189,6 +187,8 @@ Percentage of the requests served within a certain time (ms)
 100%    455 (longest request)
 ```
 
+---
+
 #### 4.2 Traefik running from binary
 
 ```bash
@@ -248,6 +248,8 @@ Percentage of the requests served within a certain time (ms)
  100%   1188 (longest request)
 ```
 
+---
+
 #### 4.3 HAProxy
 ```bash
 ab -n 100000 -c 100 http://bar.docker.localhost/
@@ -306,3 +308,34 @@ Percentage of the requests served within a certain time (ms)
   99%     91
  100%    165 (longest request)
 ```
+
+---
+
+### 5 Conclusion
+
+The test was running with 100 concurrent requests using apache benchmark and HAproxy and Træfɪk acting as simple loadbalancer between two containers.
+
+<style>
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    border:2px solid #000000;
+}
+
+th{
+    border:2px solid #000000;
+}
+
+td{
+    border:2px solid #000000;
+}
+</style>
+
+|platform|50% requests completed (ms)|95% requests completed (ms)|request per s (mean)|
+|---|---|---|---|
+|HAproxy|21|72|2485,11|
+|Træfɪk binary|91|146|1105,15|
+|Træfɪk container|93|147|1072,29|
+
+
+Træfɪk is an easy to manage loadbalancer. The current state of Træfɪk still has some shortcomings when it comes to TCP loadbalancing, Websocket support and performance, but there exist active discussions (for example [here!](https://github.com/EmileVauge/traefik/issues)) on how to address these issues. It’s worth keeping an eye on.

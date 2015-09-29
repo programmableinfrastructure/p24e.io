@@ -1,5 +1,6 @@
 ---
 title: Kube-Proxy
+labels: OSS
 vendor: Google
 website: http://kubernetes.io/v1.0/docs/admin/kube-proxy.html
 component: load-balancing

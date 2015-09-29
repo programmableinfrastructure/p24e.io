@@ -1,5 +1,6 @@
 ---
 title: Ansible
+labels: OSS supported
 vendor: Ansible
 website: http://www.ansible.com/
 component: configuration-management

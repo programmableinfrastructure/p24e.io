@@ -1,5 +1,6 @@
 ---
 title: Amazon EC2 Container Service
+labels: XaaS
 vendor: Amazon
 website: http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
 component: paas

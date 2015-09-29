@@ -1,5 +1,6 @@
 ---
 title: Project Atomic
+labels: OSS
 vendor: Red Hat
 website: http://www.projectatomic.io/
 component: host-os

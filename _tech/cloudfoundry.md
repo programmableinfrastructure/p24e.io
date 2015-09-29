@@ -1,5 +1,6 @@
 ---
 title: CloudFoundry
+labels: OSS supported XaaS
 vendor: Pivotal
 website: https://www.cloudfoundry.org
 component: stack

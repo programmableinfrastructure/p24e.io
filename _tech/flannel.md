@@ -1,5 +1,6 @@
 ---
 title: Flannel
+labels: OSS supported
 vendor: CoreOS
 website: https://github.com/coreos/flannel
 component: networking

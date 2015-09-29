@@ -1,5 +1,6 @@
 ---
 title: Docker Bench for Security
+labels: OSS
 vendor: Docker
 website: https://dockerbench.com/
 component: security

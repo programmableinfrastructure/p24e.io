@@ -1,5 +1,6 @@
 ---
 title: Docker Hub
+labels: XaaS OSS supported
 vendor: Docker
 website: https://hub.docker.com
 component: registry
@@ -10,4 +11,3 @@ Registry](https://github.com/docker/distribution/blob/master/docs/index.md)
 that allows to set up private, on-premise docker registries. A
 commercial SaaS offering called *Docker Trusted Registry* exists to
 serve private images without the need for own infrastructure.
-

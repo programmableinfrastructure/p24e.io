@@ -1,5 +1,6 @@
 ---
 title: Nerve & Synapse
+labels: OSS
 vendor: AirBnB
 website: https://github.com/airbnb/synapse
 component: service-discovery

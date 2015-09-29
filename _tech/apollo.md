@@ -1,5 +1,6 @@
 ---
 title: Apollo
+labels: OSS
 vendor: Capgemini
 website: http://capgemini.github.io/devops/apollo/
 component: stacks

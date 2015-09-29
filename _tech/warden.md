@@ -1,5 +1,6 @@
 ---
 title: Warden
+labels: OSS supported
 vendor: Pivotal
 website: http://docs.pivotal.io/pivotalcf/concepts/architecture/warden.html
 component: container-runtime

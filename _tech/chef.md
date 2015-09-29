@@ -1,5 +1,6 @@
 ---
 title: Chef
+labels: OSS supported XaaS
 vendor: Chef
 website: https://www.chef.io/
 component: configuration-management

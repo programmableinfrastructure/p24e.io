@@ -1,5 +1,6 @@
 ---
 title: Google Container Engine
+labels: XaaS
 vendor: Google
 website: https://cloud.google.com/container-engine/
 component: paas

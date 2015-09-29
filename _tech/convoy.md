@@ -1,5 +1,6 @@
 ---
 title: Convoy
+labels: OSS supported
 vendor: Rancher
 website: https://github.com/rancher/convoy
 component: persistency

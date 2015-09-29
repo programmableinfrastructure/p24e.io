@@ -1,5 +1,6 @@
 ---
 title: Quay.io
+labels: XaaS
 vendor: CoreOS
 website: https://quay.io
 component: registry

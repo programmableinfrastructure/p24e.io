@@ -1,5 +1,6 @@
 ---
 title: Portworx
+labels: Proprietary
 vendor: Portworx
 website: http://portworx.com/
 component: persistency

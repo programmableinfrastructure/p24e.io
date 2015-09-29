@@ -1,5 +1,6 @@
 ---
 title: Nomad
+labels: OSS supported
 vendor: Hashicorp
 website: https://www.nomadproject.io
 component: resource-management

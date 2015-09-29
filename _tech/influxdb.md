@@ -1,5 +1,6 @@
 ---
 title: InfluxDB
+labels: OSS supported XaaS
 vendor: InfluxDB
 website: https://influxdb.com/
 component: monitoring

@@ -1,5 +1,6 @@
 ---
 title: Apache ZooKeeper
+labels: OSS
 vendor: Apache
 website: https://zookeeper.apache.org/
 component: service-discovery

@@ -1,5 +1,6 @@
 ---
 title: Docker
+labels: OSS supported
 vendor: Docker
 website: https://www.docker.com/
 component: container-runtime

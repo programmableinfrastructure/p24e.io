@@ -1,5 +1,6 @@
 ---
 title: Vulcand
+labels: OSS
 vendor: Mailgun
 website: http://vulcanproxy.com/
 component: load-balancing

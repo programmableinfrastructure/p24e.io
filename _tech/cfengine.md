@@ -1,5 +1,6 @@
 ---
 title: CFEngine
+labels: OSS supported
 vendor: CFEngine
 website: http://cfengine.com/
 component: configuration-management

@@ -1,5 +1,6 @@
 ---
 title: OpenShift
+labels: XaaS OSS supported
 vendor: RedHat
 website: https://www.openshift.com
 component: stack

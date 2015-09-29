@@ -1,5 +1,6 @@
 ---
 title: Pulp
+labels: OSS
 vendor: RedHat
 website: http://www.pulpproject.org/
 component: registry

@@ -1,5 +1,6 @@
 ---
 title: Puppet
+labels: XaaS OSS supported
 vendor: Puppet Labs
 website: https://puppetlabs.com/
 component: configuration-management

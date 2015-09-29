@@ -1,5 +1,6 @@
 ---
 title: Sensu
+labels: OSS supported
 vendor: Sensu
 website: http://sensuapp.org
 component: monitoring

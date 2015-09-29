@@ -1,5 +1,6 @@
 ---
 title: OpenScap - container compliance
+labels: OSS
 vendor: OpenScap
 website: https://github.com/OpenSCAP/container-compliance
 component: security

@@ -1,5 +1,6 @@
 ---
 title: BusyBox
+labels: OSS
 vendor:
 website: http://busybox.net/
 component: base-images

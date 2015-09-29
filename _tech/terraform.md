@@ -1,5 +1,6 @@
 ---
 title: Terraform
+labels: OSS supported
 vendor: Hashicorp
 website: https://terraform.io/
 component: orchestration

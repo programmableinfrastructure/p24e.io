@@ -1,5 +1,6 @@
 ---
 title: Weave Net
+labels: OSS supported
 vendor: Weave
 website: http://weave.works/net/
 component: networking

@@ -1,5 +1,6 @@
 ---
 title: Twistlock
+labels: XaaS
 vendor: Twistlock
 website: https://www.twistlock.com/
 component: security

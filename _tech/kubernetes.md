@@ -1,5 +1,6 @@
 ---
 title: Kubernetes
+labels: OSS
 vendor: Google
 website: http://kubernetes.io
 component: stacks

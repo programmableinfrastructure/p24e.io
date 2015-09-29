@@ -1,5 +1,6 @@
 ---
 title: RancherOS
+labels: OSS supported
 vendor: Rancher
 website: http://rancher.com/rancher-os/
 component: host-os

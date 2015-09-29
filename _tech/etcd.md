@@ -1,5 +1,6 @@
 ---
 title: etcd
+labels: OSS supported
 vendor: CoreOS
 website: https://coreos.com/etcd/
 component: service-discovery

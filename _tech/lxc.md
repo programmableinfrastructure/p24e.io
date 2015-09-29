@@ -1,5 +1,6 @@
 ---
 title: LXC
+labels: OSS
 vendor:
 website: https://linuxcontainers.org/
 component: container-runtime

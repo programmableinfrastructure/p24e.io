@@ -1,5 +1,6 @@
 ---
 title: Banyan Insights
+labels: XaaS
 vendor: banyanops
 website: http://www.banyanops.com
 component: security

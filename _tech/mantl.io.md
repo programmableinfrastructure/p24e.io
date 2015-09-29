@@ -1,5 +1,6 @@
 ---
 title: mantl.io
+labels: OSS
 vendor: Cisco
 website: http://mantl.io
 component: stacks

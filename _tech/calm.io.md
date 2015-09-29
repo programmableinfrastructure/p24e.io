@@ -1,5 +1,6 @@
 ---
 title: Calm.io
+labels: Proprietary
 vendor: Calm.io
 website: https://calm.io/
 component: orchestration

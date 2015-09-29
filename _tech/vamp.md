@@ -1,5 +1,6 @@
 ---
 title: Vamp
+labels: OSS
 vendor: magnetic.io
 website: http://vamp.io/
 component: stacks

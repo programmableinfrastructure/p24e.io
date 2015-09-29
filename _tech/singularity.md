@@ -1,5 +1,6 @@
 ---
 title: Singularity
+labels: OSS
 vendor: HubSpot
 website: https://github.com/HubSpot/Singularity
 component: scheduling

@@ -1,5 +1,6 @@
 ---
 title: REX-Ray
+labels: OSS
 vendor: EMC
 website: https://github.com/emccode/rexray
 component: persistency

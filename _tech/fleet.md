@@ -1,5 +1,6 @@
 ---
 title: Fleet
+labels: OSS supported
 vendor: CoreOS
 website: https://coreos.com/using-coreos/clustering
 component: resource-management

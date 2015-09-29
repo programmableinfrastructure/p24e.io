@@ -1,5 +1,6 @@
 ---
 title: Ochopod
+labels: OSS
 vendor: Autodesk
 website: http://autodesk-cloud.github.io/ochopod/
 component: orchestration

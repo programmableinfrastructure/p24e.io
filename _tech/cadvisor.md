@@ -1,5 +1,6 @@
 ---
 title: cAdvisor
+labels: OSS
 vendor: Google
 website: https://github.com/google/cadvisor
 component: monitoring

@@ -1,5 +1,6 @@
 ---
 title: Open vSwitch
+labels: OSS
 vendor: Open vSwitch
 website: http://openvswitch.org/
 component: networking

@@ -1,5 +1,6 @@
 ---
 title: Lattice
+labels: OSS
 vendor: Pivotal
 website: http://lattice.cf/
 component: paas

@@ -1,5 +1,6 @@
 ---
 title: fluentd
+labels: OSS
 vendor: Fluentd Project
 sponsors:
   - Treasure Data, Inc.

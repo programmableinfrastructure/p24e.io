@@ -1,5 +1,6 @@
 ---
 title: Vamp Router
+labels: OSS
 vendor: magnetic.io
 website: https://github.com/magneticio/vamp-router
 component: load-balancing

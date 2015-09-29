@@ -1,5 +1,6 @@
 ---
 title: SaltStack
+labels: OSS supported
 vendor: SaltStack
 website: http://saltstack.com/
 component: configuration-management

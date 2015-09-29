@@ -1,5 +1,6 @@
 ---
 title: Bonnevile
+labels: Proprietary
 vendor: VMWare
 website: http://blogs.vmware.com/cloudnative/introducing-project-bonneville/
 component: container-runtime

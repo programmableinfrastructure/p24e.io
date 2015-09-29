@@ -1,5 +1,6 @@
 ---
 title: Træfɪk
+labels: OSS
 vendor: Emile Vauge
 website: http://traefik.github.io/
 component: load-balancing

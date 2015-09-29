@@ -1,5 +1,6 @@
 ---
 title: Cloud66
+labels: XaaS
 vendor: Cloud66
 website: http://www.cloud66.com/
 component: paas

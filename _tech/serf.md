@@ -1,5 +1,6 @@
 ---
 title: Serf
+labels: OSS supported
 vendor: Hashicorp
 website: https://www.serfdom.io/
 component: service-discovery

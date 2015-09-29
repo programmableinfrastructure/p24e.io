@@ -1,5 +1,6 @@
 ---
 title: Fenzo
+labels: OSS
 vendor: Netflix
 website: https://github.com/Netflix/Fenzo
 component: scheduling

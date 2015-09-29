@@ -1,5 +1,6 @@
 ---
 title: Kubernetes Scheduler
+labels: OSS
 vendor: Google
 website: http://kubernetes.io/v1.0/docs/admin/kube-scheduler.html
 component: resource-management

@@ -29,12 +29,6 @@ layout: default
     </div>
     <div class="col-md-5 col-md-offset-1">
       <table class="table">
-      {% if page.status %}
-        <tr>
-          <th>Status</th>
-          <td><span class="status-{{page.status}}">{{ page.status }}</span></td>
-        </tr>
-      {% endif %}
       {% if page.vendor %}
         <tr>
           <th>Vendor</th>
@@ -75,6 +69,16 @@ layout: default
         </tr>
       {% endif %}
       </table>
+
+      {% if page.labels %}
+      {% assign labels = page.labels | split:" " %}
+      <h5 class="tech-labels">
+        {% for label in labels %}
+        <span class="label label-default label-{{ label | downcase }}">{{ label }}</span>
+        {% endfor %}
+      </h5>
+      {% endif %}
+
     </div>
   </div>
   <ol class="breadcrumb">

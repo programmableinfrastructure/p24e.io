@@ -3,6 +3,14 @@ $(function() {
   // prettify tables in guides
   $('.guide table').addClass('table');
 
+  // add hints to labels
+  $('.label-oss').attr('title', 'Open Source Software');
+  $('.label-xaas').attr('title', 'SaaS, PaaS or IaaS offering');
+  $('.label-proprietary').attr('title', 'Proprietary software on-premise');
+  $('.label-supported').attr('title', 'Commercial support or "enterprise version" available from vendor');
+  $('.label-stalled').attr('title', 'Development seems to have stalled');
+  $('.tech-labels .label').tooltip();
+
   // Generate the nested sidebar nav for guides from the heading elements.
   var $nav = $('.guide-nav');
   if (!$nav.length) return;

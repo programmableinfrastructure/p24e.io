@@ -1,7 +1,23 @@
 // Tech, component, misc pages
 
-.status-active {
-  color: green;
+.label-oss {
+  background-color: #5cb85c;
+}
+.label-xaas {
+  background-color: #337ab7;
+}
+.label-proprietary {
+  background-color: #f0ad4e;
+}
+.label-supported {
+  background-color: #5bc0de;
+}
+.label-stalled {
+  background-color: #d9534f;
+}
+
+.tech-labels {
+  margin-bottom: 35px;
 }
 
 .desc {

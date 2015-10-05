@@ -15,7 +15,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 
 **Components:** [CoreOS](/tech/coreos/), [etcd](/tech/etcd/), [vulcand](/tech/vulcand/)
 * CoreOS is a minimal Linux OS optimized to run containers
-* etcd is a clustered key value store that stores data across a cluster of machines
+* [etcd](/tech/etcd/) used to store the configuration of vulcand
 * vulcand is a progammable loadbalancer developed by https://www.mailgun.com/ an email service for devs
 
 
@@ -24,7 +24,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ### Pros
 
 - Interacts directly with etcd
-- Configuration is distributed and fault tolerant stored
+- Configuration is distributed across all etcd servers
 - Changes don't need a restart
 - No config files needed
 
@@ -47,7 +47,7 @@ If the request matches a frontend the traffic get routed to defined backend. Mid
 
 [vulcand/frontends](https://docs.vulcand.io/proxy.html#frontends)
 
-A frontend defines how requests should be routed to backends. Their definitions are composed of the following components. An example route definition will look like Path("/foo/bar"), which will match match the given path for all hosts. If you like to match only to a given Host the expression will look like Host("example.com") && Path ("/foo/bar")
+A frontend defines how requests should be routed to backends. Their definitions are composed of the following components. An example route definition will look like `Path("/foo/bar")`, which will match match the given path for all hosts. If you like to match only to a given Host the expression will look like `Host("example.com") && Path("/foo/bar")`
 
 ```bash
 $ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
@@ -75,7 +75,7 @@ In the frontend different controls are available
 
 [vulcand/backends](https://docs.vulcand.io/proxy.html#backends-and-servers)
 
-Vulcand load-balances requests within the backend and keeps the connection pool to every server. Frontends using the same backend will share the connections. Changes to the backend configuration can be done at any time and will triger a graceful reload of the settings.
+Vulcand load-balances requests within the backend and keeps the connections open to every server in the pool. Frontends using the same backend will share the connections. Changes to the backend configuration can be done at any time and will triger a graceful reload of the settings.
 
 ```json
 {
@@ -200,8 +200,6 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ### Future work
 
-Setup middlewares, which can be used to change, intercept or reject request. Vulcand provides vulcanbundle to setup these middlewares.
+Setup middlewares, which can be used to change, intercept or reject requests. Vulcand provides a cli-tool called `vulcanbundle` which will write a new `main.go` that imports the original [vulcand](github.com/mailgun/vulcand) as a library and all extension supplied as parameters.
 
-To make the registration process automatic a script needs to be created which sets the corresponding values in etcd. To make this automation process easy labels could be used e.g.:
-- backend=foo: assign the application to foo backend
-- port=80: register this port
+To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of a [schedulers](/component/scheduler).

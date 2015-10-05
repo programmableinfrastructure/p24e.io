@@ -24,6 +24,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ### Pros
 
 - Interacts directly with etcd
+- Configuration is distributed and fault tolerant stored
 - Changes don't need a restart
 - No config files needed
 
@@ -31,7 +32,65 @@ If you want to make your distributed microservices accessible via HTTP so they c
 
 ### Cons
 - Still beta
-- No heavy development visible
+- "Status: Under active development. Used at Mailgun on moderate workloads."
+
+---
+
+## How Vulcand works
+
+Vulcand consists of three parts, frontends, backends and middlewares. The frontend is a URI path which can be matched using RegEx. This location is matched up with an backend, which is a set of servers to serve the request.
+If the request matches a frontend the traffic get routed to defined backend. Middlewares sit between frontend and backend and are able to change, intercept or reject requests.
+
+---
+
+### Frontends
+
+[vulcand/frontends](https://docs.vulcand.io/proxy.html#frontends)
+
+A frontend defines how requests should be routed to backends. Their definitions are composed of the following components. An example route definition will look like Path("/foo/bar"), which will match match the given path for all hosts. If you like to match only to a given Host the expression will look like Host("example.com") && Path ("/foo/bar")
+
+```bash
+$ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
+```
+
+#### Settings
+
+In the frontend different controls are available
+
+```json
+{
+  "Limits": {
+    "MaxMemBodyBytes":<VALUE>, // Maximum request body size to keep in memory before buffering to disk
+    "MaxBodyBytes":<VALUE>, // Maximum request body size to allow for this frontend
+  },
+  "FailoverPredicate":"IsNetworkError() && Attempts() <= 1", // Predicate that defines when requests are allowed to failover
+  "Hostname": "host1", // Host to set in forwarding headers
+  "TrustForwardHeader":<true|false>, // Time provider (useful for testing purposes)
+}
+```
+
+---
+
+### Backends
+
+[vulcand/backends](https://docs.vulcand.io/proxy.html#backends-and-servers)
+
+Vulcand load-balances requests within the backend and keeps the connection pool to every server. Frontends using the same backend will share the connections. Changes to the backend configuration can be done at any time and will triger a graceful reload of the settings.
+
+```json
+{
+  "Timeouts": {
+     "Read":"1s", // Socket read timeout (before we receive the first reply header)
+     "Dial":"2s", // Socket connect timeout
+     "TLSHandshake": "3s", // TLS handshake timeout
+  },
+  "KeepAlive": {
+     "Period":"4s", // Keepalive period for idle connections
+     "MaxIdleConnsPerHost":3, // How many idle connections will be kept per host
+  }
+}
+
+```
 
 ---
 
@@ -139,13 +198,9 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ---
 
-### Hints
-
-As etcd discovery doesn't support proxies you have to run an own discovery endpoint behind the proxy or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
-
----
-
 ### Future work
+
+Setup middlewares, which can be used to change, intercept or reject request. Vulcand provides vulcanbundle to setup these middlewares.
 
 To make the registration process automatic a script needs to be created which sets the corresponding values in etcd. To make this automation process easy labels could be used e.g.:
 - backend=foo: assign the application to foo backend

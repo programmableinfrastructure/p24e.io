@@ -7,7 +7,7 @@ pubdate: 2015-09-23 00:00:00
 
 ## Problem
 
-If you want to make your distributed microservices accessible via HTTP so they can call each other or be accessed from the outside world vulcanproxy can be used.
+If you want to horizontal scale your HTTP service and make them accessible so they can call each other or be accessed from the outside world, vulcanproxy as a loadbalancer with additional features like authentication, ciruit breaker and rate limiting can be used.
 
 ---
 
@@ -16,7 +16,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 **Components:** [CoreOS](/tech/coreos/), [etcd](/tech/etcd/), [vulcand](/tech/vulcand/)
 
 * CoreOS is a minimal Linux OS optimized to run containers
-* etcd is a clustered key value store that stores data across a cluster of machines
+* [etcd](/tech/etcd/) is a clustered key value store used to store the configuration of vulcand
 * vulcand is a progammable loadbalancer developed by [mailgun.com](https://www.mailgun.com/), an email service for devs
 
 
@@ -25,6 +25,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ### Pros
 
 - Interacts directly with etcd
+- Configuration is distributed across all etcd servers
 - Changes don't need a restart
 - No config files needed
 
@@ -33,7 +34,65 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ### Cons
 
 - Still beta
-- No heavy development visible
+- "Status: Under active development. Used at Mailgun on moderate workloads."
+
+---
+
+## How Vulcand works
+
+Vulcand consists of three parts, frontends, backends and middlewares. The frontend is a URI path which can be matched using RegEx. This location is matched up with an backend, which is a set of servers to serve the request.
+If the request matches a frontend, the traffic get routed to defined backend. Middlewares sit between frontend and backend and are able to change, intercept or reject requests.
+
+---
+
+### Frontends
+
+[vulcand/frontends](https://docs.vulcand.io/proxy.html#frontends)
+
+A frontend defines how requests should be routed to backends. Their definitions are composed of the following components. An example route definition will look like `Path("/foo/bar")`, which will match match the given path for all hosts. If you like to match only to a given Host the expression will look like `Host("example.com") && Path ("/foo/bar")`
+
+```bash
+$ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
+```
+
+#### Settings
+
+In the frontend different controls are available
+
+```json
+{
+  "Limits": {
+    "MaxMemBodyBytes":<VALUE>, // Maximum request body size to keep in memory before buffering to disk
+    "MaxBodyBytes":<VALUE>, // Maximum request body size to allow for this frontend
+  },
+  "FailoverPredicate":"IsNetworkError() && Attempts() <= 1", // Predicate that defines when requests are allowed to failover
+  "Hostname": "host1", // Host to set in forwarding headers
+  "TrustForwardHeader":<true|false>, // Time provider (useful for testing purposes)
+}
+```
+
+---
+
+### Backends
+
+[vulcand/backends](https://docs.vulcand.io/proxy.html#backends-and-servers)
+
+Vulcand load-balances requests within the backend and keeps the connections open to every server in the pool. Frontends using the same backend will share the connections. Changes to the backend configuration can be done at any time and will triger a graceful reload of the settings.
+
+```json
+{
+  "Timeouts": {
+     "Read":"1s", // Socket read timeout (before we receive the first reply header)
+     "Dial":"2s", // Socket connect timeout
+     "TLSHandshake": "3s", // TLS handshake timeout
+  },
+  "KeepAlive": {
+     "Period":"4s", // Keepalive period for idle connections
+     "MaxIdleConnsPerHost":3, // How many idle connections will be kept per host
+  }
+}
+
+```
 
 ---
 
@@ -41,7 +100,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 
 This example is based on the coreos/example [coreos.com/blog/zero-downtime-frontend-deploys-vulcand/](https://coreos.com/blog/zero-downtime-frontend-deploys-vulcand/) running on a 3 node coreos-cluster deployed via Vagrant.
 
-Example Vagrantfile, user-data and config.rb can be found here:
+Example `Vagrantfile`, `user-data` and `config.rb` can be found here:
 [https://github.com/muemich/coreos-vagrant-vulcand](https://github.com/muemich/coreos-vagrant-vulcand)
 
 ---
@@ -149,15 +208,97 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ---
 
-## Hints
+### 5. Setup middlewares
 
-As etcd discovery doesn't support proxies you have to run an own discovery endpoint behind the proxy, or if possible try to bypass the proxy. On a local machine mobile tethering will do the trick.
+> With middlewares you can change, intercept or reject request. Middlewares are allowed to observe, modify and intercept http requests and responses. Each middleware is fully compatible with Go standard library http.Handler
+
+There is the possibility to build middleware-chains, which means that each middleware handler will be exectued in a defined order. Like this it's possible to build an auth handler in front of an rate-limit handler.
+
+For getting this example to work I used my Apple Mac where the above example is running in a Vagrant/Virtualbox environment. The requirements are a working [golang](https://golang.org/) installation.
+In this example the [vulcand-auth](http://github.com/mailgun/vulcand-auth) middleware of mailgun is used. It uses basic auth which requires all requests to be authenticated. Details of all the component can be found [here](http://www.vulcanproxy.com/middlewares.html#example-auth-middleware)
+
+* Install the `vctl` and `vbundle` cli-tools
+
+```bash
+$ go get github.com/mailgun/vulcand/vctl
+$ go get github.com/mailgun/vulcand/vbundle
+```
+
+* Create a folder in the `$GOPATH` and clone the github repo
+
+```bash
+mkdir $GOPATH/src/github.com/mailgun && cd $GOPATH/src/github.com/mailgun && git clone http://github.com/mailgun/vulcand-auth
+```
+
+* Create a folder in your `GOPATH` environment that will be used for your version of Vulcand with the new middleware.
+
+```bash
+mkdir $GOPATH/src/github.com/mailgun/vulcand-bundle
+```
+
+* Access the newly created folder
+
+```bash
+cd $GOPATH/src/github.com/mailgun/vulcand-bundle
+```
+
+* Execute the `vbundle` command
+
+```bash
+vbundle init --middleware=github.com/mailgun/vulcand-auth/auth
+```
+the --middleware flag tells the tool the location of the auth middleware into bundle
+
+* Check if there are new files/folders `main.go`, `registry` and `vctl`. If this is the case everything went well and `vbundle` wrote a new `main.go` and `vctl` which includes the auth middleware.
+* Now the bundle needs to be installed.
+
+```bash
+$ go build -o vulcand
+$ pushd vctl/ && go build -o vctl && popd
+```
+
+* Start vulcand with `./vulcand -etcd http://<IP_ETCD>:4001`
+
+Connect to one of the coreos machine `$ vagrant ssh core-01 -- -A` and set the needed key that the above example is using the auth middleware
+
+```bash
+$ etcdctl set /vulcand/frontends/example/middlewares/auth1 '{"Type": "auth", "Middleware":{"Username": "user", "Password": "secret1"}}'
+```
+
+To validate if everything is running you can `curl` from your local machine
+
+```bash
+curl -i http://example.com:8181
+HTTP/1.1 403 Forbidden
+Date: Tue, 06 Oct 2015 11:21:33 GMT
+Content-Length: 0
+Content-Type: text/plain; charset=utf-8
+```
+
+The response will be a 403 forbidden
+
+```bash
+curl -u user:secret1 -i http://example.com:8181
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 68
+Content-Type: text/html
+Date: Tue, 06 Oct 2015 11:22:24 GMT
+Last-Modified: Thu, 01 May 2014 04:06:46 GMT
+Server: nginx/1.1.19
+
+<html>
+<body style="background:red">
+<h1>1.0.0</h1>
+</body>
+</html>
+```
+
+With basic auth the response will be a 200 OK
 
 ---
 
-## Future work
+### Future work
+Create  a container of the newly created vulcand including the auth middleware.
 
-To make the registration process automatic, a script needs to be created which sets the corresponding values in etcd. To make this automation process easy, labels could be used e.g.:
-
-- `backend=foo`: assign the application to foo backend
-- `port=80`: register this port
+To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/component/scheduler).

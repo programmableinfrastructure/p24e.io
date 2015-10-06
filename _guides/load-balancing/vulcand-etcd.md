@@ -25,7 +25,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ### Pros
 
 - Interacts directly with etcd
-- Configuration is distributed and fault tolerant stored
+- Configuration is distributed across all etcd servers
 - Changes don't need a restart
 - No config files needed
 
@@ -77,7 +77,7 @@ In the frontend different controls are available
 
 [vulcand/backends](https://docs.vulcand.io/proxy.html#backends-and-servers)
 
-Vulcand load-balances requests within the backend and keeps the connection pool to every server. Frontends using the same backend will share the connections. Changes to the backend configuration can be done at any time and will triger a graceful reload of the settings.
+Vulcand load-balances requests within the backend and keeps the connections open to every server in the pool. Frontends using the same backend will share the connections. Changes to the backend configuration can be done at any time and will triger a graceful reload of the settings.
 
 ```json
 {
@@ -210,8 +210,6 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ### Future work
 
-Setup middlewares, which can be used to change, intercept or reject requests. Vulcand provides a cli-tool called `vulcanbundle` which will write a new main.go that imports the original [vulcand](https://github.com/mailgun/vulcand)  as a library and all extension supplied as parameters.
+Setup middlewares, which can be used to change, intercept or reject requests. Vulcand provides a cli-tool called `vulcanbundle` which will write a new `main.go` that imports the original [vulcand](github.com/mailgun/vulcand) as a library and all extension supplied as parameters.
 
-To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of schedulers.
-
----
+To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of a [schedulers](/component/scheduler).

@@ -212,4 +212,4 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 Setup middlewares, which can be used to change, intercept or reject requests. Vulcand provides a cli-tool called `vulcanbundle` which will write a new `main.go` that imports the original [vulcand](github.com/mailgun/vulcand) as a library and all extension supplied as parameters.
 
-To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of a [schedulers](/component/scheduler).
+To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/component/scheduler).

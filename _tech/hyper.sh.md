@@ -1,5 +1,6 @@
 ---
 title: Hyper.sh
+labels: OSS
 vendor: Hyper
 website: https://hyper.sh/
 component: host-os

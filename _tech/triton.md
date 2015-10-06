@@ -1,5 +1,6 @@
 ---
 title: Triton
+labels: XaaS OSS supported
 vendor: Joyent
 website: https://www.joyent.com/
 component: paas

@@ -1,5 +1,6 @@
 ---
 title: Aurora
+labels: OSS
 vendor: Apache
 website: http://aurora.apache.org/
 component: scheduling

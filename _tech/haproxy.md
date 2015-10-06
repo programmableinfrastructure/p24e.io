@@ -1,5 +1,6 @@
 ---
 title: HAProxy
+labels: OSS supported
 vendor: Willy Tarreau
 website: http://www.haproxy.org/
 component: load-balancing
@@ -8,7 +9,4 @@ component: load-balancing
 > availability, load balancing, and proxying for TCP and HTTP-based
 > applications.
 
-HAProxy is often used in [stacks](/components/stacks) in combination
-with tools like [Consul](/tech/consul), [etcd](/tech/etcd) or
-[Bamboo](/tech/bamboo). It is also the integral part of tools like
-[Vamp Router](/tech/vamp-router).
+HAProxy is often used in [stacks](/components/stacks) in combination with tools like [Consul](/tech/consul), [etcd](/tech/etcd) or [Bamboo](/tech/bamboo). It is also the integral part of tools like [Vamp Router](/tech/vamp-router).

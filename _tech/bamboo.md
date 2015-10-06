@@ -1,5 +1,6 @@
 ---
 title: Bamboo
+labels: OSS
 vendor: QubitProducts
 website: https://github.com/QubitProducts/bamboo
 component: service-discovery

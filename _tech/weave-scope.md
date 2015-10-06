@@ -1,5 +1,6 @@
 ---
 title: Weave Scope
+labels: OSS supported
 vendor: Weave
 website: http://weave.works/scope/
 component: monitoring

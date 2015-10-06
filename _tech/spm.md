@@ -1,5 +1,6 @@
 ---
 title: SPM
+labels: XaaS Proprietary
 vendor: sematext
 website: http://sematext.com/spm/
 component: monitoring

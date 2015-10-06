@@ -1,5 +1,6 @@
 ---
 title: Kubernetes Replication Controller
+labels: OSS
 vendor: Google
 website: http://kubernetes.io/v1.0/docs/user-guide/replication-controller.html
 component: scheduling

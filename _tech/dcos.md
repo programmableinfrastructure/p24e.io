@@ -1,5 +1,6 @@
 ---
 title: DCOS
+labels: OSS supported
 vendor: Mesosphere
 website: https://mesosphere.com
 component: stacks

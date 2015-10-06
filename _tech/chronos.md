@@ -1,5 +1,6 @@
 ---
 title: Chronos
+labels: OSS supported
 vendor: Mesosphere
 website: https://github.com/mesos/chronos
 component: scheduling

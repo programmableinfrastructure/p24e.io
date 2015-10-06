@@ -1,5 +1,6 @@
 ---
 title: Graylog
+labels: OSS supported
 vendor: Graylog
 website: https://www.graylog.org/
 component: logging

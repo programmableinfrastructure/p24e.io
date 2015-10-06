@@ -1,5 +1,6 @@
 ---
 title: tutum
+labels: XaaS
 vendor: tutum
 website: https://www.tutum.co
 component: paas

@@ -1,5 +1,6 @@
 ---
 title: Pipework
+labels: OSS
 vendor: Jérôme Petazzoni
 website: https://github.com/jpetazzo/pipework
 component: networking

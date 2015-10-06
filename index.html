@@ -7,14 +7,23 @@ layout: default
     <h3>Guides</h3>
   </div>
   <div class="row">
-    <div class="col-md-12">
-      <h4>Service Discovery</h4>
+    <div class="col-md-6">
       <ul class="guides-list">
-        {% assign sd_guides = site.guides | where: 'component', 'service-discovery' %}
+        {% assign sd_guides = site.guides | sort: 'pubdate' %}
         {% for guide in sd_guides %}
-          <li><a href="{{ guide.url }}">{{ guide.title }}</a> by {{ guide.author }}</li>
+          <li><a href="{{ guide.url }}">{{ guide.title }}</a> by {{ guide.author }} <small>({{ guide.pubdate | date: '%Y-%m-%d' }})</small></li>
         {% endfor %}
       </ul>
+    </div>
+    <div class="col-md-5 col">
+      <p class="definition">
+        <big class="first">&ldquo;</big>programmable infrastructure (p24e) is the concept of applying methods and tooling established in software
+        development onto the management of <span title="servers, storage, networking ...">IT infrastructure</span>.
+        This includes but is not limited to: <span title="test automation, continuous delivery, continuous integration ...">automation</span>,
+        <span title="git, semantic versioning, docker commit ...">versioning</span>, <span title="interfaces, design-by-contract, REST ...">APIs</span>,
+        <span title="unikernels, read-only containers ...">immutability</span> and <span title="TDD, code reviews ...">agile techniques</span></td><big>&rdquo;</big>
+      </p>
+      <cite>&mdash; The Elders of the Internet</cite>
     </div>
   </div>
   <hr/>

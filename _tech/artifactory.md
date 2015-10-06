@@ -1,5 +1,6 @@
 ---
 title: Artifactory
+labels: OSS XaaS supported
 vendor: JFrog
 website: http://www.jfrog.com/article/docker/
 component: registry

@@ -168,7 +168,7 @@ Marathon app environment variables can be very useful to customize the HAProxy b
 One common example is the use of sticky sessions. Those are generally frowned upon as they go against the principle of stateless services, so session stickiness should never be made available to all services.
 Using an app environment variable makes this a deliberate decision on a per-service basis.
 
-One use case we did encounter was implementing a "polling" fallback endpoint to a generally Websockets based service. Using session stickiness can be the lesser of two evils, if the other option is changing your service design to use centralls store shared state just for a small minority of clients not supporting Websockets.
+One use case we did encounter was implementing a "polling" fallback endpoint to a generally Websockets based service. Using session stickiness can be the lesser of two evils, if the other option is changing your service design to centrally store shared state just for a small minority of clients not supporting Websockets.
 
 To implement this, replace `balance leastconn` in the `backend` block of `/var/bamboo/haproxy_template.cfg` with this:
 
@@ -191,7 +191,7 @@ Then, in the Marathon JSON file that you use to deploy your service, add an envi
   }
 }
 ```
-Redeploy with the changed environment settings, and you shouls see requests from the same clients, ending up at the same service instance.
+Redeploy with the changed environment settings, and you should see requests from the same clients ending up at the same service instance.
 
 ---
 

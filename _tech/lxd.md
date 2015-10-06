@@ -1,5 +1,6 @@
 ---
 title: LXD
+labels: OSS supported
 vendor: Ubuntu
 website: http://www.ubuntu.com/cloud/tools/lxd
 component: host-os

@@ -1,5 +1,6 @@
 ---
 title: NewRelic
+labels: XaaS
 vendor: NewRelic
 website: http://newrelic.com/docker
 component: monitoring

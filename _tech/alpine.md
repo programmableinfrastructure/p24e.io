@@ -1,5 +1,6 @@
 ---
 title: Alpine Linux
+labels: OSS
 vendor: Alpine
 website: http://alpinelinux.org/
 component: base-images

@@ -1,5 +1,6 @@
 ---
 title: Clearlinux
+labels: OSS
 vendor: Intel
 website: https://clearlinux.org/
 component: host-os

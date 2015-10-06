@@ -1,5 +1,6 @@
 ---
 title: FlawCheck
+labels: XaaS
 vendor: FlawCheck
 website: https://flawcheck.com/
 component: security

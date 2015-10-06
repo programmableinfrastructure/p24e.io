@@ -1,5 +1,6 @@
 ---
 title: Vault
+labels: OSS supported
 vendor: Hashicorp
 website: https://vaultproject.io/
 component: secrets-management

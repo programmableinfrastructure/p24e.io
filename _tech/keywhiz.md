@@ -1,5 +1,6 @@
 ---
 title: Keywhiz
+labels: OSS
 vendor: Square
 website: https://square.github.io/keywhiz/
 component: secrets-management

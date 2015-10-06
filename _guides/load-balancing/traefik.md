@@ -1,5 +1,5 @@
 ---
-title: Service Discovery with traefik
+title: Load Balancing with traefik
 component: load-balancing
 author: Michael Mueller
 pubdate: 2015-09-25 00:00:00
@@ -7,26 +7,28 @@ pubdate: 2015-09-25 00:00:00
 
 ## Problem
 
-If you have a radpid changing microservice infrastructure and you want to make it available via HTTP you need to have the configuration managed automatically and dynamically.
+If you have a rapid changing microservice infrastructure and you want to make it available via HTTP you need to have the configuration managed automatically and dynamically.
 
 ---
 
 ## Overview
 
 **Components:** [Docker](/tech/docker/), [Træfik](/tech/traefik/)
+
 * Docker to run the services.
-* Træfɪk will automatically configure it's frontend and backend configuration based on labels assigned to the docker containers. Other ways of configuring Træfɪk are available (Mesos/Marathon, Consul, Etcd, Rest API, file), but aren't covered here.
+* Træfɪk will automatically configure its frontend and backend configuration based on labels assigned to the docker containers. Other ways of configuring Træfɪk are available ([Docker](/tech/docker), [Mesos](/tech/mesos)/[Marathon](/tech/marathon), [Consul](/tech/consul), [Etcd](/tech/etcd), Rest API, file), but aren't covered here.
 
 ---
 
 ### Pros
 
-- Supports several backends (Docker, Mesos/Marathon, Consul, Etcd, Rest API, file...)
-- Automatically and dynamically configuration
+- Supports several backends
+- Automatic and dynamic configuration
 
 ---
 
 ### Cons
+
 - Pretty young project
 - No websocket support
 - No TCP support
@@ -42,7 +44,7 @@ This example is based on a single machine running Ubuntu 14.04 with docker. We'l
 ### 1. Set up base infrastructure
 
 - Install docker on your host.
-- Clone github repo https://github.com/EmileVauge/traefik
+- Clone github repo [github.com/EmileVauge/traefik](https://github.com/EmileVauge/traefik)
 
 ---
 
@@ -66,7 +68,7 @@ docker run -d --label=traefik.backend=foo --label=traefik.host=bar --name exampl
 
 ---
 
-### 3 Set up traefik
+### 3. Set up traefik
 
 Create traefik.toml based on your needs. Example:
 
@@ -124,7 +126,7 @@ Now you can access the frontend via :80 and should see:
 
 ### 4. Performance
 
-As a quick indication and to have a rough idea what's the performance of traefik a qucik apache benchmark has been done. And to make the result compareable, a HAProxy has been installed on the same machine and the benchmark has been done again with the same parameters.
+As a quick indication and to have a rough idea what's the performance of traefik a quick apache benchmark has been done. And to make the result compareable, a HAProxy has been installed on the same machine and the benchmark has been done again with the same parameters.
 
 #### 4.1 Traefik as container
 
@@ -249,6 +251,7 @@ Percentage of the requests served within a certain time (ms)
 ---
 
 #### 4.3 HAProxy
+
 ```bash
 ab -n 100000 -c 100 http://bar.docker.localhost/
 This is ApacheBench, Version 2.3 <$Revision: 1663405 $>
@@ -309,7 +312,7 @@ Percentage of the requests served within a certain time (ms)
 
 ---
 
-### 5 Conclusion
+## Conclusion
 
 The test was running with 100 concurrent requests using apache benchmark and HAproxy and Træfɪk acting as simple loadbalancer between two containers.
 
@@ -318,6 +321,5 @@ The test was running with 100 concurrent requests using apache benchmark and HAp
 |HAproxy|21|72|2485,11|
 |Træfɪk binary|91|146|1105,15|
 |Træfɪk container|93|147|1072,29|
-
 
 Træfɪk is an easy to manage loadbalancer. The current state of Træfɪk still has some shortcomings when it comes to TCP loadbalancing, Websocket support and performance, but there exist active discussions (for example [here!](https://github.com/EmileVauge/traefik/issues)) on how to address these issues. It’s worth keeping an eye on.

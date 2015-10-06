@@ -1,5 +1,6 @@
 ---
 title: Eureka
+labels: OSS
 vendor: NetFlix
 website: https://github.com/Netflix/eureka/wiki/Eureka-at-a-glance
 component: service-discovery

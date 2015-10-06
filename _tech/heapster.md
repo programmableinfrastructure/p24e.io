@@ -1,5 +1,6 @@
 ---
 title: Heapster
+labels: OSS
 vendor: Google
 website: https://github.com/GoogleCloudPlatform/heapster
 component: monitoring

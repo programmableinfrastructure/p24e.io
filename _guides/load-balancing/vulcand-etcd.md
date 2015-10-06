@@ -1,5 +1,5 @@
 ---
-title: Service Discovery with etcd and vulcand
+title: Load Balancing with etcd and vulcand
 component: load-balancing
 author: Michael Mueller
 pubdate: 2015-09-23 00:00:00
@@ -14,9 +14,10 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ## Overview
 
 **Components:** [CoreOS](/tech/coreos/), [etcd](/tech/etcd/), [vulcand](/tech/vulcand/)
+
 * CoreOS is a minimal Linux OS optimized to run containers
-* etcd is a clustered key value store that stores data across a cluster of machines
-* vulcand is a progammable loadbalancer developed by https://www.mailgun.com/ an email service for devs
+* [etcd](/tech/etcd/) is a clustered key value store used to store the configuration of vulcand
+* vulcand is a progammable loadbalancer developed by [mailgun.com](https://www.mailgun.com/), an email service for devs
 
 
 ---
@@ -31,6 +32,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ---
 
 ### Cons
+
 - Still beta
 - "Status: Under active development. Used at Mailgun on moderate workloads."
 
@@ -39,7 +41,7 @@ If you want to make your distributed microservices accessible via HTTP so they c
 ## How Vulcand works
 
 Vulcand consists of three parts, frontends, backends and middlewares. The frontend is a URI path which can be matched using RegEx. This location is matched up with an backend, which is a set of servers to serve the request.
-If the request matches a frontend the traffic get routed to defined backend. Middlewares sit between frontend and backend and are able to change, intercept or reject requests.
+If the request matches a frontend, the traffic get routed to defined backend. Middlewares sit between frontend and backend and are able to change, intercept or reject requests.
 
 ---
 
@@ -47,7 +49,7 @@ If the request matches a frontend the traffic get routed to defined backend. Mid
 
 [vulcand/frontends](https://docs.vulcand.io/proxy.html#frontends)
 
-A frontend defines how requests should be routed to backends. Their definitions are composed of the following components. An example route definition will look like Path("/foo/bar"), which will match match the given path for all hosts. If you like to match only to a given Host the expression will look like Host("example.com") && Path ("/foo/bar")
+A frontend defines how requests should be routed to backends. Their definitions are composed of the following components. An example route definition will look like `Path("/foo/bar")`, which will match match the given path for all hosts. If you like to match only to a given Host the expression will look like `Host("example.com") && Path ("/foo/bar")`
 
 ```bash
 $ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
@@ -96,10 +98,10 @@ Vulcand load-balances requests within the backend and keeps the connection pool 
 
 ## Implementation steps
 
-This example is based on the coreos/example https://coreos.com/blog/zero-downtime-frontend-deploys-vulcand/ running on a 3 node coreos-cluster deployed via Vagrant.
+This example is based on the coreos/example [coreos.com/blog/zero-downtime-frontend-deploys-vulcand/](https://coreos.com/blog/zero-downtime-frontend-deploys-vulcand/) running on a 3 node coreos-cluster deployed via Vagrant.
 
-Example Vagrantfile, user-data and config.rb can be found here:
-https://github.com/muemich/coreos-vagrant-vulcand
+Example `Vagrantfile`, `user-data` and `config.rb` can be found here:
+[https://github.com/muemich/coreos-vagrant-vulcand](https://github.com/muemich/coreos-vagrant-vulcand)
 
 ---
 
@@ -114,8 +116,10 @@ Launch one or many CoreOS machines and log in. For this example one is enough.
 $ vagrant up
 $ vagrant ssh core-01 -- -A
 ```
+---
 
-### Ensure etcd and vulcand is running
+### 2. Ensure etcd and vulcand are running
+
 ```bash
 core@core-01 ~ $ systemctl status etcd2
 ● etcd2.service - etcd2
@@ -171,7 +175,7 @@ As there are no frontends deployed yet, the warning can be ignored.
 
 ---
 
-### 2. Deploy test backend containers
+### 3. Deploy test backend containers
 
 Run web application __v1__ containers,
 
@@ -182,13 +186,19 @@ $ docker run -d --name example-v1.2 -p 8087:80 coreos/example:1.0.0
 
 Configure Vulcand to proxy to __v1__ container,
 
+---
+
+### 4. Register backend containers
+
 ```bash
-### 3.  Register backend containers
 $ etcdctl set /vulcand/backends/v1/backend '{"Type": "http"}'
 $ etcdctl set /vulcand/backends/v1/servers/v1.1 '{"URL": "http://172.17.8.101:8086"}'
 $ etcdctl set /vulcand/backends/v1/servers/v1.2 '{"URL": "http://172.17.8.101:8087"}'
+```
 
-#### To proxy to v1 containers
+*To proxy to v1 containers:*
+
+```
 $ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
 ```
 
@@ -200,8 +210,8 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ### Future work
 
-Setup middlewares, which can be used to change, intercept or reject request. Vulcand provides vulcanbundle to setup these middlewares.
+Setup middlewares, which can be used to change, intercept or reject requests. Vulcand provides a cli-tool called `vulcanbundle` which will write a new main.go that imports the original [vulcand](https://github.com/mailgun/vulcand)  as a library and all extension supplied as parameters.
 
-To make the registration process automatic a script needs to be created which sets the corresponding values in etcd. To make this automation process easy labels could be used e.g.:
-- backend=foo: assign the application to foo backend
-- port=80: register this port
+To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of schedulers.
+
+---

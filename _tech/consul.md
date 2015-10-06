@@ -1,5 +1,6 @@
 ---
-title: consul
+title: Consul
+labels: OSS supported
 vendor: Hashicorp
 website: https://hashicorp.com/blog/consul.html
 component: service-discovery

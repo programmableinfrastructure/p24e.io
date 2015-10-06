@@ -1,5 +1,6 @@
 ---
 title: Mesos-DNS
+labels: OSS supported
 vendor: Mesosphere
 website: https://github.com/mesosphere/mesos-dns
 component: service-discovery

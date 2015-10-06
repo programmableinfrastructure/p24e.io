@@ -1,5 +1,6 @@
 ---
 title: Logstash
+labels: OSS supported
 vendor: elastic
 website: https://www.elastic.co/products/logstash
 component: logging

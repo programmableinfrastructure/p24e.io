@@ -1,5 +1,6 @@
 ---
 title: IBM Bluemix
+labels: XaaS Proprietary
 vendor: IBM
 website: http://www.ibm.com/cloud-computing/bluemix/
 component: paas

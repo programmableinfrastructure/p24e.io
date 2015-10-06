@@ -1,5 +1,6 @@
 ---
 title: Convox
+labels: OSS
 vendor: Convox
 website: https://www.convox.com/
 component: paas

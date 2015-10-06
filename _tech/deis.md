@@ -1,5 +1,6 @@
 ---
 title: Deis
+labels: OSS supported
 vendor: Engine Yard
 website: http://deis.io
 component: stack

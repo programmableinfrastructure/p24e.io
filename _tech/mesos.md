@@ -1,5 +1,6 @@
 ---
 title: Mesos
+labels: OSS
 vendor: Apache
 website: http://mesos.apache.org/
 component: resource-management

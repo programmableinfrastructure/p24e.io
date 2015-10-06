@@ -1,5 +1,6 @@
 ---
 title: Logspout
+labels: OSS
 vendor: Glider Labs
 website: https://github.com/gliderlabs/logspout
 component: logging

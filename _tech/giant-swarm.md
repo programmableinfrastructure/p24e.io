@@ -1,5 +1,6 @@
 ---
 title: Giant Swarm
+labels: XaaS Proprietary
 vendor: Giant Swarm
 website: https://giantswarm.io/
 component: paas

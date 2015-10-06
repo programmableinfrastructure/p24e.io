@@ -1,5 +1,6 @@
 ---
 title: Apache Brooklyn
+labels: OSS
 vendor: Apache
 website: https://brooklyn.incubator.apache.org/
 component: orchestration

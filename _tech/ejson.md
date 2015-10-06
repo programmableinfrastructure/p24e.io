@@ -1,5 +1,6 @@
 ---
 title: ejson
+labels: OSS
 vendor: Shopify
 website: https://github.com/Shopify/ejson
 component: secrets-management

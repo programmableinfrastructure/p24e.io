@@ -1,9 +1,9 @@
 ---
 title: Fenzo
+labels: OSS
 vendor: Netflix
 website: https://github.com/Netflix/Fenzo
 component: scheduling
-status: active
 posts:
   - title: "Fenzo: OSS Scheduler for Apache Mesos Frameworks"
     date: 2015-08-20

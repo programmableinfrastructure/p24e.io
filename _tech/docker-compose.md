@@ -1,5 +1,6 @@
 ---
 title: Docker Compose
+labels: OSS supported
 vendor: Docker
 website: https://docs.docker.com/compose/
 component: orchestration

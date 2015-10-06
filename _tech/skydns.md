@@ -1,6 +1,7 @@
 ---
 title: SkyDNS
-vendor: 
+labels: OSS
+vendor:
 website: https://github.com/skynetservices/skydns
 component: service-discovery
 ---

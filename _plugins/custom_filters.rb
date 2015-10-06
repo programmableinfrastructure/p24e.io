@@ -30,6 +30,24 @@ module Jekyll
       docu.data[field_name] || docu.data[alt_field_name || field_name]
     end
 
+    # Returns the content of the first <p> tag.
+    # Good for excerpts where you want to omit the headings.
+    # If no <p> tag is present, returns the passed content unaltered.
+    def first_paragraph(content)
+      if content.to_s =~ /<p ?[^>]*>(.*?)<\/p>/im
+        $1
+      else
+        content
+      end
+    end
+
+    # Converts all whitespace characters to a single space.
+    # Similar use case as #strip_newlines which unfortunately concatenates
+    # sentences, instead of separating them by a space.
+    def normalize_whitespace(input)
+      input.to_s.gsub(/\s+/, ' ')
+    end
+
   end
 end
 

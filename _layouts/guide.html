@@ -26,10 +26,23 @@ layout: default
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-9">
       <p class="text-right muted">
         first published: {{ page.pubdate | date: '%B %d, %Y' }}
       </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'p24e';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
     </div>
   </div>
   <ol class="breadcrumb">

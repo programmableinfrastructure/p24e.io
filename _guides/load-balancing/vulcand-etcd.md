@@ -208,8 +208,60 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 ---
 
-### Future work
+### 5. Setup middlewares
 
-Setup middlewares, which can be used to change, intercept or reject requests. Vulcand provides a cli-tool called `vulcanbundle` which will write a new `main.go` that imports the original [vulcand](github.com/mailgun/vulcand) as a library and all extension supplied as parameters.
+With middlewares you can change, intercept or reject request. Middlewares are allowed to observe, modify and intercept http requests and responses. Each middleware is fully compatible with Go standard library http.Handler. There is the possibility to build middleware-chains, which means that each middleware handler will exectued in a defined order. Like this it's possible to biuld an auth handler in front of an rate-limit handler.
+
+For getting this example to work I used my Apple Mac where the above example is running in a Vagrant/Virtualbox environment. The requirements are a working [golang](https://golang.org/) installation.
+In this example the [vulcand-auth](http://github.com/mailgun/vulcand-auth) middleware of mailgun is used. It uses basic auth which requires all requests to be authenticated. Details of all the component can be found [here](http://www.vulcanproxy.com/middlewares.html#example-auth-middleware)
+You'll need to install the `vctl` and `vbundle` cli-tool `go get github.com/mailgun/vulcand/vctl`, `go get github.com/mailgun/vulcand/vbundle`
+
+Create a folder in the `$GOPATH` and clone the github repo `mkdir $GOPATH/src/github.com/mailgun && cd $GOPATH/src/github.com/mailgun && git clone http://github.com/mailgun/vulcand-auth`
+Create a folder in GOPATH environment that will be used for your version of Vulcand compiled with the new middleware. `mkdir $GOPATH/src/github.com/mailgun/vulcand-bundle`. Access the newly created folder `cd $GOPATH/src/github.com/mailgun/vulcand-bundle` and execute the `vbundle` command `vbundle init --middleware=github.com/mailgun/vulcand-auth/auth` the --middleware flag tells the tool the location of the auth middleware into bundle
+You can check if there are new files/folders `main.go`, `registry` and `vctl`. If this is the case everything went well and `vbundle` wrote a new `main.go` and `vctl` which includes the auth middleware. Now the bundle needs to be installed.
+`go build -o vulcand`
+`pushd vctl/ && go build -o vctl && popd`
+
+You can start the vulcand with `./vulcand -etcd http://<IP_ETCD>:4001`
+
+Connect to one of the coreos machine `$ vagrant ssh core-01 -- -A` and set the needed key that the above example is using the auth middleware
+```bash
+etcdctl set /vulcand/frontends/example/middlewares/auth1 '{"Type": "auth", "Middleware":{"Username": "user", "Password": "secret1"}}'
+```
+
+To validate if everything is running you can `curl`
+```bash
+curl -i http://example.com:8181
+HTTP/1.1 403 Forbidden
+Date: Tue, 06 Oct 2015 11:21:33 GMT
+Content-Length: 0
+Content-Type: text/plain; charset=utf-8
+```
+
+The response will be a 403 forbidden
+
+```bash
+curl -u user:secret1 -i http://example.com:8181
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 68
+Content-Type: text/html
+Date: Tue, 06 Oct 2015 11:22:24 GMT
+Last-Modified: Thu, 01 May 2014 04:06:46 GMT
+Server: nginx/1.1.19
+
+<html>
+<body style="background:red">
+<h1>1.0.0</h1>
+</body>
+</html>
+```
+
+With basic auth the response will be a 200 OK
+
+---
+
+### Future work
+Create  a container of the newly created vulcand including the auth middleware.
 
 To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/component/scheduler).

@@ -14,7 +14,7 @@ You have a bunch of [microservices](/tech/microservice) deployed in your [Mesos]
 
 ## Overview
 
-**Components:** [Bamboo](/tech/bamboo/), [Marathon](/tech/Marathon/), [HAProxy](/tech/haproxy/), [Zookeeper](/tech/zookeeper/)
+**Components:** [Bamboo](/tech/bamboo/), [Marathon](/tech/marathon/), [HAProxy](/tech/haproxy/), [Zookeeper](/tech/zookeeper/)
 
 * Marathon starts Applications (services) as tasks in the Mesos cluster and uses healthchecks to keep track of their status
 * Bamboo listens to Marathon events for Application changes and updates the HAProxy configuration when instances become available or unavailable
@@ -107,7 +107,7 @@ Post it to the Marathon API via curl:
 
 Check the Marathon UI, and you should see Ghost being deployed:
 
-![Marathon](Marathon.png)
+![Marathon](marathon.png)
 
 ---
 

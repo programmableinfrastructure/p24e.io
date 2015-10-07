@@ -49,7 +49,7 @@ If the request matches a frontend, the traffic get routed to defined backend. Mi
 
 [vulcand/frontends](https://docs.vulcand.io/proxy.html#frontends)
 
-A frontend defines how requests should be routed to backends. Their definitions are composed of the following components. An example route definition will look like `Path("/foo/bar")`, which will match match the given path for all hosts. If you like to match only to a given Host the expression will look like `Host("example.com") && Path ("/foo/bar")`
+A frontend defines how requests should be routed to backends. An example route definition will look like `Path("/foo/bar")`, which will match the given path for all hosts. If you like to match only to a given Host the expression will look like `Host("example.com") && Path ("/foo/bar")`
 
 ```bash
 $ etcdctl set /vulcand/frontends/example/frontend '{"Type": "http", "BackendId": "v1", "Route": "Host(`example.com`) && Path(`/`)"}'
@@ -214,8 +214,8 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 There is the possibility to build middleware-chains, which means that each middleware handler will be exectued in a defined order. Like this it's possible to build an auth handler in front of an rate-limit handler.
 
-For getting this example to work I used my Apple Mac where the above example is running in a Vagrant/Virtualbox environment. The requirements are a working [golang](https://golang.org/) installation.
-In this example the [vulcand-auth](http://github.com/mailgun/vulcand-auth) middleware of mailgun is used. It uses basic auth which requires all requests to be authenticated. Details of all the component can be found [here](http://www.vulcanproxy.com/middlewares.html#example-auth-middleware)
+For getting this example to work, I used my MacBook where the above example is running in a Vagrant/Virtualbox environment. The requirements are a working [golang](https://golang.org/) installation.
+In this example the [vulcand-auth](http://github.com/mailgun/vulcand-auth) middleware of mailgun is used. It uses basic auth, which requires all requests to be authenticated. Details of all the component can be found [here](http://www.vulcanproxy.com/middlewares.html#example-auth-middleware)
 
 * Install the `vctl` and `vbundle` cli-tools
 
@@ -301,4 +301,4 @@ With basic auth the response will be a 200 OK
 ### Future work
 Create  a container of the newly created vulcand including the auth middleware.
 
-To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/component/scheduler).
+To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/component/scheduling).

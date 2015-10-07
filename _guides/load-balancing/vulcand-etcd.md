@@ -7,7 +7,7 @@ pubdate: 2015-09-23 00:00:00
 
 ## Problem
 
-If you want to horizontal scale your HTTP service and make them accessible so they can call each other or be accessed from the outside world, vulcanproxy as a loadbalancer with additional features like authentication, ciruit breaker and rate limiting can be used.
+If you want to horizontal scale your HTTP service, vulcanproxy as a loadbalancer with additional features like authentication, ciruit breaker and rate limiting will be an option.
 
 ---
 

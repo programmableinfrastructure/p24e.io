@@ -5,4 +5,4 @@ vendor: CoreOS
 website: https://tectonic.com/
 component: stacks
 ---
-> Tectonic is the Best Platform for Linux Containers.
+Tectonic is an commercially supported, integrated stack comprised of [Kubernetes](/tech/kubernetes), [Docker](/tech/docker)/[rkt](/tech/rkt), [flannel](/tech/flannel), [etcd](/tech/etcd) and [CoreOS](/tech/coreos).

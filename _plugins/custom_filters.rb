@@ -1,6 +1,17 @@
 module Jekyll
   module CustomFilters
 
+    def site_updates(site, max)
+      updates = %w[guides tech components].map {|c| site[c] }.flatten.sort do |a, b|
+        File.mtime(b.path) <=> File.mtime(a.path)
+      end
+      updates[0...max]
+    end
+
+    def updated_at(page)
+      File.mtime(page['path'])
+    end
+
     def collect_posts(pages, max, more_posts)
       return [] if !pages || !pages.first
       posts = pages.map {|page| Array(page.data['posts']) }.flatten

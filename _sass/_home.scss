@@ -1,7 +1,16 @@
 // Homepage
 
-.guides-list {
+.updates-list {
   font-size: 15px;
+}
+.guides-list {
+  p {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .label {
+    font-size: 13px;
+  }
 }
 
 .social-icons {

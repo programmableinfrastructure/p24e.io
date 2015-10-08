@@ -5,14 +5,18 @@ description: The ultimate resource for technologies revolving around programmabl
 
 <div class="container-fluid">
   <div class="page-header">
-    <h3>Guides</h3>
+    <h3>Latest updates</h3>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <ul class="guides-list">
-        {% assign sd_guides = site.guides | sort: 'pubdate' %}
-        {% for guide in sd_guides %}
-          <li><a href="{{ guide.url }}">{{ guide.title }}</a> by {{ guide.author }} <small>({{ guide.pubdate | date: '%Y-%m-%d' }})</small></li>
+      <ul class="updates-list">
+        {% assign updates = site | site_updates: 7 %}
+        {% for update in updates %}
+          <li>
+            <a href="{{ update.url }}">{{ update.title }}</a>,
+            <time class="timeago" datetime="{{ update | updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">{{ update | updated_at | date: "%F" }}</time> &nbsp;
+            <span class="label label-default label-{{ update.collection }}">{{ update.collection }}</span>
+          </li>
         {% endfor %}
       </ul>
     </div>
@@ -46,6 +50,23 @@ description: The ultimate resource for technologies revolving around programmabl
       </div>
       {% cycle '', '', '', '</div><div class="row">' %}
     {% endfor %}
+  </div>
+  <hr/>
+  <div class="page-header">
+    <h3>Guides</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12 guides-list">
+      {% assign sd_guides = site.guides | sort: 'pubdate' %}
+      {% for guide in sd_guides %}
+        <h5>
+          <a href="{{ guide.url }}">{{ guide.title }}</a>
+          <small>{{ guide.pubdate | date: '%Y-%m-%d' }} by {{ guide.author }} &nbsp;</small>
+          <a href="/components/{{ guide.component }}" class="label-link"><span class="label label-default">{{ guide.component | resolve_collection: 'components', 'title' }}</span></a>
+        </h5>
+        <p>{{ guide.content | first_paragraph | strip_html | truncate_words: 25 }} ...</p>
+      {% endfor %}
+    </div>
   </div>
   <hr/>
 </div>

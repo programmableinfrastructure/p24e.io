@@ -301,4 +301,4 @@ With basic auth the response will be a 200 OK
 ### Future work
 Create  a container of the newly created vulcand including the auth middleware.
 
-To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/components/scheduling).
+To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/component/scheduling).

@@ -263,15 +263,13 @@ $ pushd vctl/ && go build -o vctl && popd
 
 Connect to one of the coreos machine `$ vagrant ssh core-01 -- -A` and set the needed key that the above example is using the auth middleware
 
-#### 5.2
-
-Test Auth Middleware with a conatainer
+#### 5.2 Test Auth Middleware as a conatainer
 
 ```bash
 docker run --name vulcand -p 80:80 -p 443:443 -p 8182:8182 -p 8181:8181 muellermich/vulcand /go/src/github.com/mailgun/vulcand-bundle/vulcand -apiInterface=0.0.0.0 -interface=0.0.0.0 -etcd=http://$private_ipv4:4001 -port=80 -apiPort=8182
 ```
 
-#### 5.3 Common tasks
+#### 5.3 Configure Middleware and validate
 
 Set username and password for the frontend/example
 

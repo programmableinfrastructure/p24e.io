@@ -11,6 +11,10 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  {% if page.canonical_url %}
+  <link rel="canonical" href="{{ page.canonical_url }}">
+  {% else %}
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  {% endif %}
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
 </head>

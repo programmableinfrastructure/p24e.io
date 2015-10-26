@@ -57,7 +57,7 @@ description: The ultimate resource for technologies revolving around programmabl
   </div>
   <div class="row">
     <div class="col-md-12 guides-list">
-      {% assign sd_guides = site.guides | sort: 'pubdate' %}
+      {% assign sd_guides = site.guides | sort: 'pubdate' | reverse %}
       {% for guide in sd_guides %}
         <h5>
           <a href="{{ guide.url }}">{{ guide.title }}</a>

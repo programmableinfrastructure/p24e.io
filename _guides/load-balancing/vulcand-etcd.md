@@ -214,6 +214,8 @@ Then access to `example.com` and you can see the current version _1.0.0_ .
 
 There is the possibility to build middleware-chains, which means that each middleware handler will be exectued in a defined order. Like this it's possible to build an auth handler in front of an rate-limit handler.
 
+#### 5.1 Build from sources
+
 For getting this example to work, I used my MacBook where the above example is running in a Vagrant/Virtualbox environment. The requirements are a working [golang](https://golang.org/) installation.
 In this example the [vulcand-auth](http://github.com/mailgun/vulcand-auth) middleware of mailgun is used. It uses basic auth, which requires all requests to be authenticated. Details of all the component can be found [here](http://www.vulcanproxy.com/middlewares.html#example-auth-middleware)
 
@@ -227,25 +229,25 @@ $ go get github.com/mailgun/vulcand/vbundle
 * Create a folder in the `$GOPATH` and clone the github repo
 
 ```bash
-mkdir $GOPATH/src/github.com/mailgun && cd $GOPATH/src/github.com/mailgun && git clone http://github.com/mailgun/vulcand-auth
+$ mkdir $GOPATH/src/github.com/mailgun && cd $GOPATH/src/github.com/mailgun && git clone http://github.com/mailgun/vulcand-auth
 ```
 
 * Create a folder in your `GOPATH` environment that will be used for your version of Vulcand with the new middleware.
 
 ```bash
-mkdir $GOPATH/src/github.com/mailgun/vulcand-bundle
+$ mkdir $GOPATH/src/github.com/mailgun/vulcand-bundle
 ```
 
 * Access the newly created folder
 
 ```bash
-cd $GOPATH/src/github.com/mailgun/vulcand-bundle
+$ cd $GOPATH/src/github.com/mailgun/vulcand-bundle
 ```
 
 * Execute the `vbundle` command
 
 ```bash
-vbundle init --middleware=github.com/mailgun/vulcand-auth/auth
+$ vbundle init --middleware=github.com/mailgun/vulcand-auth/auth
 ```
 the --middleware flag tells the tool the location of the auth middleware into bundle
 
@@ -260,6 +262,16 @@ $ pushd vctl/ && go build -o vctl && popd
 * Start vulcand with `./vulcand -etcd http://<IP_ETCD>:4001`
 
 Connect to one of the coreos machine `$ vagrant ssh core-01 -- -A` and set the needed key that the above example is using the auth middleware
+
+#### 5.2 Test Auth Middleware as a conatainer
+
+```bash
+docker run --name vulcand -p 80:80 -p 443:443 -p 8182:8182 -p 8181:8181 muellermich/vulcand /go/src/github.com/mailgun/vulcand-bundle/vulcand -apiInterface=0.0.0.0 -interface=0.0.0.0 -etcd=http://$private_ipv4:4001 -port=80 -apiPort=8182
+```
+
+#### 5.3 Configure Middleware and validate
+
+Set username and password for the frontend/example
 
 ```bash
 $ etcdctl set /vulcand/frontends/example/middlewares/auth1 '{"Type": "auth", "Middleware":{"Username": "user", "Password": "secret1"}}'
@@ -299,6 +311,5 @@ With basic auth the response will be a 200 OK
 ---
 
 ### Future work
-Create  a container of the newly created vulcand including the auth middleware.
 
 To make the registration process of new backends automatic, entries for each backend need to be created in etcd. This can be accomplished by a script that runs after a new backend is started, or by hooking into lifecycle events of [schedulers](/components/scheduling).

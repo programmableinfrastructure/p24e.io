@@ -38,7 +38,7 @@
       }
       var delta = level - lastLevel;
 
-      var link = '<a href="#' + el.id + '">' + el.innerText + '</a>';
+      var link = '<a href="#' + el.id + '">' + $(el).text() + '</a>';
       if (delta == 0) {
         if (nav) nav += '</li>';
         nav += '<li>' + link;
@@ -63,5 +63,5 @@
       target: '.guide-nav'
     });
   }
-  
+
 })();

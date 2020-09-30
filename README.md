@@ -32,7 +32,7 @@ license.
 To contribute a *guide*, please structure it like the existing ones, i.e. use
 at least the following topics (additional ones are always welcome):
 
-1. Problem description
+1. Problem descriptions
 2. Overview of the solution, also covering advantages and shortcomings
 3. Implementation steps
 

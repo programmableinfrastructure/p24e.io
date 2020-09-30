@@ -18,8 +18,8 @@ or, if you don't have Ruby installed:
 
 The site is running on http://localhost:4000/
 
-Contributing
-------------
+Contributing to our project
+---------------------------
 
 You are welcome to contribute new or enhance existing guides and tech articles.
 Just send a pull request - our goal is respond as fast as possible, maximum

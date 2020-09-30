@@ -23,7 +23,7 @@ Contributing
 
 You are welcome to contribute new or enhance existing guides and tech articles.
 Just send a pull request - our goal is respond as fast as possible, maximum
-within a week.
+within a week.Good Project
 
 By doing so, you agree that you own the copyright of the content you provide
 and that you are willing to put it under the [CC-BY-SA](http://creativecommons.org/licenses/by-sa/4.0/)

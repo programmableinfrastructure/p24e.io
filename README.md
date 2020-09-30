@@ -45,5 +45,4 @@ make sure these posts also end up on the overview page of the component
 ("Service Discovery" in case of *etcd*.)
 
 Only add posts that provide an unique view on the technology, like its
-application in a more complex setting, or a detailed discussion of its design
-or features.
+application in a more complex setting, or a detailed discussion of its design, features or progress.

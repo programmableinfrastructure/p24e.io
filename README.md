@@ -1,4 +1,4 @@
-WORK IN PROGRESS
+WORK IS IN PROGRESS
 ================
 
 Please join the conversation on [Slack](http://p24e.slack.com) to discuss about

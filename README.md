@@ -47,3 +47,4 @@ make sure these posts also end up on the overview page of the component
 Only add posts that provide an unique view on the technology, like its
 application in a more complex setting, or a detailed discussion of its design
 or features.
+Contribute with us to make it better. As we are Developers :-)

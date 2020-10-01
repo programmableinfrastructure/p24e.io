@@ -7,7 +7,7 @@ component definitions, structure of guides, topics for guides etc.
 Running locally
 ---------------
 
-make sure you have Ruby installed, then run:
+Make sure you have Ruby installed, then run:
 
 * `bundle install`
 * `jekyll serve`
